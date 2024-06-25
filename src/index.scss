@@ -1,0 +1,30 @@
+@import './styles/normalize';
+
+html {
+  scrollbar-gutter: stable;
+}
+
+// #root {
+//   min-width: 1280px;
+//   margin: 0 auto;
+//   padding: 2rem;
+//   text-align: center;
+// }
+
+* {
+  box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+li {
+  margin: 0;
+  padding: 0;
+}

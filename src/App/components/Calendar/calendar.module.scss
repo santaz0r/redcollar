@@ -1,0 +1,29 @@
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  background-color: gray;
+  gap: 1px;
+
+  & .cell {
+    min-width: 258px;
+    min-height: 128px;
+    background-color: #fff;
+    &.weekend {
+      background-color: #fafafa;
+    }
+
+    & .row {
+      display: flex;
+      justify-content: flex-end;
+
+      & .day {
+        height: 33px;
+        width: 33px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+}

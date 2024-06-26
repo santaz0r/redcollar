@@ -1,0 +1,77 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 88px;
+  &__item {
+    display: flex;
+    align-items: center;
+  }
+  &__logo {
+    margin-right: 35px;
+  }
+  &__name {
+    margin-right: 19px;
+
+    font-size: 26px;
+    line-height: 120%;
+    letter-spacing: -0.02em;
+    color: #000;
+  }
+
+  &__app {
+    font-size: 64px;
+    line-height: 120%;
+    letter-spacing: -0.04em;
+    color: #0d0c0c;
+    span {
+      color: #f51b1b;
+    }
+  }
+
+  &__month_nav {
+    display: flex;
+    align-items: center;
+    margin-right: 134px;
+  }
+
+  &__month {
+    margin-right: 32px;
+
+    font-size: 26px;
+    line-height: 120%;
+    letter-spacing: -0.02em;
+    text-align: center;
+    color: #0d0c0c;
+  }
+
+  &__btn {
+    border-radius: 8px;
+    padding: 8px 16px;
+    width: 64px;
+    height: 48px;
+    background-color: #efefef;
+    background-image: url('./arrow.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+    &:first-of-type {
+      rotate: 180deg;
+      margin-right: 8px;
+    }
+  }
+}
+
+.auth {
+  &__btn {
+    border-radius: 12px;
+    padding: 21px 32px;
+    width: 124px;
+    height: 60px;
+    background: #0d0c0c;
+
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: -0.02em;
+    color: #fff;
+  }
+}

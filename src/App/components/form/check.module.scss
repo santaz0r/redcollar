@@ -1,0 +1,25 @@
+.login {
+  border-radius: 64px;
+  width: 600px;
+  height: 510px;
+  background-color: #fff;
+  position: relative;
+
+  &__wrapper {
+    padding: 133px 127px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__title {
+    font-weight: 600;
+    font-size: 36px;
+    line-height: 100%;
+    letter-spacing: -0.02em;
+    text-align: center;
+    color: #0d0c0c;
+    margin-bottom: 40px;
+  }
+}

@@ -12,15 +12,12 @@ const EventInfo = ({ eventData, onClose }) => {
   const time = moment.utc(dateStart).format('HH:mm');
 
   const isPassed = moment().isAfter(dateStart);
-  console.log(isPassed);
 
   const setPassed = () => {
     return `${isPassed ? `${styles.event} ${styles.event__passed}` : styles.event}`;
   };
 
-  const handleClose = () => {
-    onClose();
-  };
+  const handleClose = () => onClose();
 
   return (
     <div className={setPassed()}>
@@ -58,7 +55,8 @@ const EventInfo = ({ eventData, onClose }) => {
           <GallerySwiper elements={photos} />
         </div>
       </div>
-      <button className={styles.event__close} onClick={handleClose}></button>
+      {!isPassed && <div className={styles.event__enter}>принять</div>}
+      <button className={common.modal__btn_close} onClick={handleClose}></button>
     </div>
   );
 };

@@ -18,7 +18,7 @@
 
   & .cell {
     min-width: 128px;
-    min-height: 80px;
+    min-height: 128px;
     background-color: #fff;
     font-size: 20px;
     &__header {
@@ -34,6 +34,7 @@
       justify-content: flex-end;
 
       & .day {
+        padding: 12px;
         display: flex;
         justify-content: flex-end;
         &__wrapper {
@@ -69,7 +70,7 @@
   cursor: pointer;
   background-color: #efefef;
   font-weight: 500;
-  font-size: 20px;
+  font-size: 18px;
   line-height: 140%;
   letter-spacing: -0.02em;
 

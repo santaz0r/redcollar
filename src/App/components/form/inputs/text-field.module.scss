@@ -1,0 +1,61 @@
+.label {
+  position: relative;
+  &__title {
+    position: absolute;
+    top: -6px;
+    left: 16px;
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: -0.02em;
+    color: gray;
+    white-space: nowrap;
+    transition: top 0.1s linear, left 0.1s linear, font-size 0.1s linear;
+  }
+  input {
+    padding: 27px 16px 12px;
+    width: 345px;
+    height: 60px;
+    border-radius: 12px;
+    border: 1px solid #0d0c0c;
+    caret-color: #23ae00;
+    outline: none;
+
+    font-size: 18px;
+    line-height: 120%;
+    letter-spacing: -0.02em;
+    color: #0d0c0c;
+
+    &::placeholder {
+      opacity: 0;
+      transition: opacity 0.05s linear;
+    }
+
+    &:focus::placeholder {
+      opacity: 1;
+      transition: opacity 0.1s linear;
+    }
+  }
+  &:has(input:focus) {
+    .label {
+      &__title {
+        top: -20px;
+        left: 16px;
+        font-size: 14px;
+        transition: top 0.1s linear, left 0.1s linear, font-size 0.1s linear;
+      }
+    }
+  }
+  &:has(input:not(:placeholder-shown)) {
+    .label {
+      &__title {
+        top: -20px;
+        left: 16px;
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+.hide {
+  display: none;
+}

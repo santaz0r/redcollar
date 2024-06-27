@@ -8,7 +8,6 @@ const Calendar = ({ startDay, momentInst, totalDays, events }) => {
   const day = startDay.clone().subtract(1, 'day');
   const [isModalActive, setModalActive] = useState(false);
   const [eventInfo, setEventInfo] = useState(null);
-
   const daysArr = [...Array(totalDays)].map(() => day.add(1, 'day').clone());
   const setWeekend = (day) => {
     const isWeekend = day === 0 || day === 6;
@@ -25,6 +24,8 @@ const Calendar = ({ startDay, momentInst, totalDays, events }) => {
 
   // const convertToUnix = (day) => day.format('X');
   // console.log('2024-06-30T10:00:00.000Z'.format('X'));
+  const isPassed = (dateStart) => moment().isAfter(dateStart);
+
   const isCurrentDay = (day) => moment().isSame(day, 'day');
   const isCurrentMonth = (day) => momentInst.isSame(day, 'month');
   const formatDayOfMonth = (day) => {
@@ -52,7 +53,7 @@ const Calendar = ({ startDay, momentInst, totalDays, events }) => {
       <div className={styles.calendar}>
         {daysArr.map((i) => (
           <div
-            className={`${styles.cell} ${setWeekend(i.day())} ${!isCurrentMonth(i) && styles.current_month}`}
+            className={`${styles.cell} ${setWeekend(i.day())} ${!isCurrentMonth(i) ? styles.current_month : ''}`}
             key={i.unix()}
           >
             <div className={styles.row}>
@@ -69,7 +70,11 @@ const Calendar = ({ startDay, momentInst, totalDays, events }) => {
                 {events
                   .filter((e) => i.isSame(e.dateStart, 'day'))
                   .map((e) => (
-                    <button onClick={() => handleClick(e)} key={e.id} className={styles.event}>
+                    <button
+                      onClick={() => handleClick(e)}
+                      key={e.id}
+                      className={`${!isPassed(e.dateStart) ? styles.event : `${styles.event} ${styles.event__passed}`}`}
+                    >
                       {e.title}
                     </button>
                   ))}

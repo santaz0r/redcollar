@@ -5,17 +5,20 @@
   gap: 1px;
   border-radius: 24px;
   overflow: hidden;
+  padding: 1px;
   &__header {
     background-color: #fff;
     & .row {
       padding-right: 6px;
       font-weight: bold;
+      text-align: right;
+      text-transform: capitalize;
     }
   }
 
   & .cell {
-    min-width: 258px;
-    min-height: 128px;
+    min-width: 128px;
+    min-height: 80px;
     background-color: #fff;
     font-size: 20px;
     &__header {
@@ -58,4 +61,12 @@
 
 .current_month {
   color: #a4a4a4;
+}
+
+.event {
+  cursor: pointer;
+
+  & .passed {
+    opacity: 0.72;
+  }
 }

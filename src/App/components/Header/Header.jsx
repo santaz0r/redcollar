@@ -1,6 +1,7 @@
 import rclogo from '../../../assets/rclogo.svg';
 
 import styles from './header.module.scss';
+import common from '../../../styles/_common.module.scss';
 
 const Header = ({ today, handleNext, handlePrev }) => {
   const month = today.format('MMMM');
@@ -19,8 +20,8 @@ const Header = ({ today, handleNext, handlePrev }) => {
       <div className={styles.header__item}>
         <div className={styles.header__month_nav}>
           <div className={styles.header__month}>{month}</div>
-          <button onClick={handlePrev} className={styles.header__btn}></button>
-          <button onClick={handleNext} className={styles.header__btn}></button>
+          <button onClick={handlePrev} className={`${styles.header__btn} ${common.nav__btn}`}></button>
+          <button onClick={handleNext} className={`${styles.header__btn} ${common.nav__btn}`}></button>
         </div>
 
         <button className={styles.auth__btn}>Войти</button>

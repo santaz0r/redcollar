@@ -6,20 +6,23 @@ import Header from './components/Header/Header';
 
 import './App.module.scss';
 
-const URL = 'http://localhost:1337/api/';
+const URL =
+  'http://localhost:1337/api/{{path}}?pagination%5BpageSize%5D=100&populate=participants%2C%20owner%2C%20photos';
 const TOTAL_DAYS = 42;
 
 function App() {
   moment.updateLocale('ru', {
     week: { dow: 1 },
   });
+
   const [momentInst, setMomentInst] = useState(moment());
   const [events, setEvents] = useState([]);
+
   useEffect(() => {
-    fetch(`${URL}events`)
+    fetch(`${URL.replace('{{path}}', 'events')}`)
       .then((res) => res.json())
       .then((data) => {
-        setEvents(data);
+        setEvents(data.data);
       });
   }, []);
 

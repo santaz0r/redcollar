@@ -1,7 +1,8 @@
 @import './styles/normalize';
+@import './styles/swiper';
 
 html {
-  // scrollbar-gutter: stable;
+  font-family: 'Roboto', sans-serif;
 }
 
 #root {
@@ -13,7 +14,6 @@ html {
 
 * {
   box-sizing: border-box;
-  font-family: 'Open Sans', sans-serif;
 }
 
 h1,

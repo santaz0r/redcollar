@@ -1,0 +1,27 @@
+.nav__btn {
+  border-radius: 8px;
+  padding: 8px 16px;
+  width: 64px;
+  height: 48px;
+  background-color: #efefef;
+  background-image: url('../assets/arrow.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+  &:first-of-type {
+    rotate: 180deg;
+    margin-right: 8px;
+  }
+}
+
+.swiper__btn {
+  &_next,
+  &_prev {
+    color: inherit;
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: auto;
+    }
+  }
+}

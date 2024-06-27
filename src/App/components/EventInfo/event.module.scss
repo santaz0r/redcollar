@@ -1,0 +1,149 @@
+@import '../../App.module.scss';
+
+.event {
+  width: 60vw;
+  height: 90vh;
+  background-color: #fff;
+  border-radius: 64px;
+  padding: 80px 64px;
+  position: relative;
+  &__close {
+    position: absolute;
+    right: 40px;
+    top: 40px;
+    padding: 22px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-image: url('./cross.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    cursor: pointer;
+  }
+  &__title {
+    font-size: 36px;
+    line-height: 100%;
+    letter-spacing: -0.02em;
+    text-align: center;
+    color: #0d0c0c;
+    margin-bottom: 40px;
+  }
+
+  &__info {
+    display: flex;
+    margin-bottom: 40px;
+  }
+
+  &__adress {
+    background-color: #fafafa;
+    padding: 15px 12px 15px 16px;
+    border-radius: 24px;
+    margin-right: 32px;
+    min-width: 212px;
+  }
+
+  &__time {
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: -0.02em;
+    font-weight: 900;
+    color: #0d0c0c;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #efefef;
+    margin-bottom: 8px;
+    div {
+      margin-bottom: 4px;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  &__location {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: -0.02em;
+    color: #0d0c0c;
+  }
+
+  &__descr {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 140%;
+    letter-spacing: -0.02em;
+    color: #0d0c0c;
+  }
+
+  &__participants {
+    margin-bottom: 56px;
+    h3 {
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 140%;
+      letter-spacing: -0.02em;
+      color: #0d0c0c;
+      margin-bottom: 24px;
+    }
+  }
+  &__gallery {
+    margin-bottom: 60px;
+  }
+
+  &:has(div.event__notification) {
+    .event {
+      &__title {
+        margin-bottom: 16px;
+      }
+      &__notification {
+        margin: 0 auto;
+        margin-bottom: 30px;
+        padding: 8px 12px 8px 44px;
+        background-color: #fafafa;
+        width: max-content;
+        border-radius: 12px;
+        position: relative;
+        &::before {
+          content: url('../../../assets/note.svg');
+          position: absolute;
+          left: 15px;
+        }
+      }
+
+      &__time,
+      &__location {
+        opacity: 0.4;
+      }
+    }
+  }
+}
+
+.participants {
+  &__list {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    div {
+      margin-right: 48px;
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+.gallery {
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+    h3 {
+      font-size: 24px;
+      line-height: 100%;
+      letter-spacing: -0.02em;
+      color: #0d0c0c;
+    }
+  }
+}

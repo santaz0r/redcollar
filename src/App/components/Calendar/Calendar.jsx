@@ -27,6 +27,9 @@ const Calendar = ({ startDay, momentInst, totalDays, events }) => {
   // console.log('2024-06-30T10:00:00.000Z'.format('X'));
   const isCurrentDay = (day) => moment().isSame(day, 'day');
   const isCurrentMonth = (day) => momentInst.isSame(day, 'month');
+  const formatDayOfMonth = (day) => {
+    return day.date() === 1 ? day.format('D MMM') : day.format('D');
+  };
 
   return (
     <>
@@ -55,7 +58,11 @@ const Calendar = ({ startDay, momentInst, totalDays, events }) => {
             <div className={styles.row}>
               <div className={styles.day}>
                 <div className={styles.day__wrapper}>
-                  {!isCurrentDay(i) ? i.format('D') : <div className={styles.current_day}>{i.format('D')}</div>}
+                  {!isCurrentDay(i) ? (
+                    formatDayOfMonth(i)
+                  ) : (
+                    <div className={styles.current_day}>{formatDayOfMonth(i)}</div>
+                  )}
                 </div>
               </div>
               <div className={styles.events}>

@@ -3,6 +3,8 @@ import { GallerySwiper } from '../Swiper/Swiper';
 import styles from './event.module.scss';
 import common from '../../../styles/_common.module.scss';
 import moment from 'moment';
+import Notification from '../ui/notification/Notification';
+import notifications from '../../utils/notificationsList';
 
 const EventInfo = ({ eventData, onClose }) => {
   const { title, description, location, dateStart, owner, participants, photos } = eventData;
@@ -22,8 +24,7 @@ const EventInfo = ({ eventData, onClose }) => {
   return (
     <div className={setPassed()}>
       <h2 className={styles.event__title}>{title}</h2>
-
-      {isPassed && <div className={styles.event__notification}>Мероприятие уже прошло</div>}
+      {isPassed && <Notification text={notifications.eventPassed} classes={styles.event__notification} />}
       <div className={styles.event__info}>
         <div className={styles.event__adress}>
           <div className={styles.event__time}>

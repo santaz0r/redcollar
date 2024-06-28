@@ -68,12 +68,27 @@ export const login =
   ({ payload, setActive }) =>
   async (dispatch) => {
     dispatch(authRequested());
-
     const { email, password } = payload;
     try {
-      console.log(email, password);
       const response = await authService.login({ email, password });
-      console.log(response);
+      localStorage.setItem('token', response.jwt);
+      dispatch(authRequestSuccess(response.user));
+      setActive(false);
+    } catch (e) {
+      if (axios.isAxiosError(e)) {
+        const message = e.response?.data?.message;
+        dispatch(authRequestFailed(message));
+      }
+    }
+  };
+
+export const signUp =
+  ({ payload, setActive }) =>
+  async (dispatch) => {
+    dispatch(authRequested());
+    const { email, password, name: username } = payload;
+    try {
+      const response = await authService.signUp({ email, password, username });
       localStorage.setItem('token', response.jwt);
       dispatch(authRequestSuccess(response.user));
       setActive(false);

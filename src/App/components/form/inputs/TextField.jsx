@@ -2,7 +2,17 @@ import { useState } from 'react';
 import styles from './text-field.module.scss';
 import Regexp from './patterns';
 
-const TextField = ({ label, field, type = 'text', placeholder, register, error, value = '', isHide, handleTrim }) => {
+const TextField = ({
+  label,
+  field,
+  type = 'text',
+  placeholder,
+  register,
+  error,
+  value = '',
+  handleTrim,
+  isHide = false,
+}) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const toggleShowPassword = () => {

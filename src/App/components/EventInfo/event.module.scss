@@ -84,20 +84,8 @@
         margin-bottom: 16px;
       }
       &__notification {
-        margin: 0 auto;
         margin-bottom: 30px;
-        padding: 8px 12px 8px 44px;
-        background-color: #fafafa;
-        width: max-content;
-        border-radius: 12px;
-        position: relative;
-        &::before {
-          content: url('../../../assets/note.svg');
-          position: absolute;
-          left: 15px;
-        }
       }
-
       &__time,
       &__location {
         opacity: 0.4;

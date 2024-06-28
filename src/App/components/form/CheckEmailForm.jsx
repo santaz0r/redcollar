@@ -4,7 +4,9 @@ import TextField from './inputs/TextField';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUsersList, login } from '../../store/users';
+import { getUsersList, login, signUp } from '../../store/users';
+import notifications from '../../utils/notificationsList';
+import Notification from '../ui/notification/Notification';
 
 const CheckEmailForm = ({ setCurrentModal, setActive, onClose }) => {
   const dispatch = useDispatch();
@@ -23,6 +25,7 @@ const CheckEmailForm = ({ setCurrentModal, setActive, onClose }) => {
     getValues,
     setValue,
   } = useForm({ mode: 'onChange' });
+  const hasError = Object.keys(errors).length;
 
   const handleTrim = (event) => {
     const { name, value } = event.target;
@@ -30,31 +33,25 @@ const CheckEmailForm = ({ setCurrentModal, setActive, onClose }) => {
   };
 
   const onSubmit = handleSubmit((payload) => {
-    console.log(payload);
-    dispatch(login({ payload, setActive }));
+    isRegistration ? dispatch(signUp({ payload, setActive })) : dispatch(login({ payload, setActive }));
   });
-  const hasError = Object.keys(errors).length;
 
   const handleCheck = () => {
     const email = getValues('email');
     const isEmailExists = users.some((u) => u.email === email);
-    // console.log(email, users, errors, isEmailExists);
 
-    if (isEmailExists) {
-      setCheckStatus('login');
-    }
-    // } else {
-    //   setCheckStatus('registration');
-    // }
+    isEmailExists ? setCheckStatus('login') : setCheckStatus('registration');
   };
-
+  const setClasses = () => {
+    return combineCheckLogin ? styles.login : styles.register;
+  };
   const handleClose = () => onClose();
   return (
-    <div className={styles.login}>
-      <div className={styles.login__wrapper}>
-        {combineCheckLogin && <h2 className={styles.login__title}>Вход</h2>}
-        {isRegistration && <h2 className={styles.login__title}>Регистрация</h2>}
-        <form onSubmit={onSubmit}>
+    <div className={`${styles.check} ${setClasses()}`}>
+      <div className={styles.check__wrapper}>
+        {combineCheckLogin && <h2 className={styles.check__title}>Вход</h2>}
+        {isRegistration && <h2 className={styles.check__title}>Регистрация</h2>}
+        <form onSubmit={onSubmit} className={styles.check__form}>
           {combineCheckLogin && (
             <>
               <TextField
@@ -63,9 +60,10 @@ const CheckEmailForm = ({ setCurrentModal, setActive, onClose }) => {
                 placeholder={'Enter e-mail'}
                 register={register}
                 error={errors}
-                isHide={!isCheck}
                 handleTrim={handleTrim}
+                isHide={!isCheck}
               />
+
               <TextField
                 label="Пароль"
                 field="password"
@@ -73,9 +71,10 @@ const CheckEmailForm = ({ setCurrentModal, setActive, onClose }) => {
                 type="password"
                 register={register}
                 error={errors}
-                isHide={!isLogin}
                 handleTrim={handleTrim}
+                isHide={!isLogin}
               />
+
               {isCheck && (
                 <button onClick={handleCheck} type="button" disabled={hasError}>
                   Далее
@@ -90,7 +89,16 @@ const CheckEmailForm = ({ setCurrentModal, setActive, onClose }) => {
           )}
           {isRegistration && (
             <>
-              <TextField label="Ваше имя" field="name" placeholder={'Введите имя'} register={register} error={errors} />
+              <Notification text={notifications.registration} classes={styles.check__notification} />
+
+              <TextField
+                label="Ваше имя"
+                field="name"
+                placeholder={'Введите имя'}
+                register={register}
+                error={errors}
+                handleTrim={handleTrim}
+              />
 
               <TextField
                 label="Пароль"
@@ -99,6 +107,7 @@ const CheckEmailForm = ({ setCurrentModal, setActive, onClose }) => {
                 type="password"
                 register={register}
                 error={errors}
+                handleTrim={handleTrim}
               />
 
               <TextField
@@ -108,9 +117,11 @@ const CheckEmailForm = ({ setCurrentModal, setActive, onClose }) => {
                 type="password"
                 register={register}
                 error={errors}
+                handleTrim={handleTrim}
               />
+
               <button onClick={onSubmit} type="submit">
-                Войти
+                Зарегестрироваться
               </button>
             </>
           )}

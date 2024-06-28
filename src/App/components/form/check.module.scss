@@ -1,15 +1,18 @@
-.login {
+.check {
+  $root: &;
   border-radius: 64px;
   width: 600px;
   height: 510px;
   background-color: #fff;
   position: relative;
-
+  transition: width 0.1s linear, height 0.1s linear;
   &__wrapper {
     padding: 133px 127px;
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
   }
 
@@ -21,5 +24,36 @@
     text-align: center;
     color: #0d0c0c;
     margin-bottom: 40px;
+  }
+
+  &__notification {
+    margin-bottom: 24px;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+
+    div {
+      &:first-of-type {
+        margin-bottom: 32px;
+      }
+    }
+  }
+
+  &.register {
+    width: 710px;
+    height: 620px;
+    transition: width 0.1s linear, height 0.1s linear;
+    #{$root} {
+      &__wrapper {
+        padding: 80px 95px 64px;
+      }
+      &__title {
+        margin-bottom: 16px;
+      }
+    }
   }
 }

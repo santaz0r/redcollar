@@ -1,7 +1,7 @@
 const Regexp = {
   email: {
-    pattern: /^[\w-\\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
-    message: "It's must be email",
+    pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/g,
+    message: 'Некорректный email',
   },
 
   password: {

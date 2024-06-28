@@ -3,34 +3,49 @@ import common from '../../../styles/_common.module.scss';
 import TextField from './inputs/TextField';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUsersList, login } from '../../store/users';
 
 const CheckEmailForm = ({ setCurrentModal, setActive, onClose }) => {
+  const dispatch = useDispatch();
+  const users = useSelector(getUsersList);
   const [checkStatus, setCheckStatus] = useState('check');
   const combineCheckLogin = checkStatus === 'login' || checkStatus === 'check';
   const isCheck = checkStatus === 'check';
   const isLogin = checkStatus === 'login';
   const isRegistration = checkStatus === 'registration';
+
   // const [isRegistration, setIsRegistration] = useState(false);
   const {
     register,
     handleSubmit,
     formState: { errors },
     getValues,
-  } = useForm();
+    setValue,
+  } = useForm({ mode: 'onChange' });
+
+  const handleTrim = (event) => {
+    const { name, value } = event.target;
+    setValue(name, value.trim(), { shouldValidate: true });
+  };
 
   const onSubmit = handleSubmit((payload) => {
     console.log(payload);
+    dispatch(login({ payload, setActive }));
   });
+  const hasError = Object.keys(errors).length;
 
   const handleCheck = () => {
     const email = getValues('email');
-    console.log(email);
+    const isEmailExists = users.some((u) => u.email === email);
+    // console.log(email, users, errors, isEmailExists);
 
-    if (1 === 1) {
+    if (isEmailExists) {
       setCheckStatus('login');
-    } else {
-      setCheckStatus('registration');
     }
+    // } else {
+    //   setCheckStatus('registration');
+    // }
   };
 
   const handleClose = () => onClose();
@@ -49,6 +64,7 @@ const CheckEmailForm = ({ setCurrentModal, setActive, onClose }) => {
                 register={register}
                 error={errors}
                 isHide={!isCheck}
+                handleTrim={handleTrim}
               />
               <TextField
                 label="Пароль"
@@ -58,14 +74,15 @@ const CheckEmailForm = ({ setCurrentModal, setActive, onClose }) => {
                 register={register}
                 error={errors}
                 isHide={!isLogin}
+                handleTrim={handleTrim}
               />
               {isCheck && (
-                <button onClick={handleCheck} type="button">
+                <button onClick={handleCheck} type="button" disabled={hasError}>
                   Далее
                 </button>
               )}
               {isLogin && (
-                <button onClick={onSubmit} type="submit">
+                <button onClick={onSubmit} type="submit" disabled={hasError}>
                   Войти
                 </button>
               )}

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styles from './text-field.module.scss';
 import Regexp from './patterns';
 
-const TextField = ({ label, field, type = 'text', placeholder, register, error, value = '', isHide }) => {
+const TextField = ({ label, field, type = 'text', placeholder, register, error, value = '', isHide, handleTrim }) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const toggleShowPassword = () => {
@@ -18,12 +18,13 @@ const TextField = ({ label, field, type = 'text', placeholder, register, error, 
           placeholder={placeholder}
           defaultValue={value}
           {...register(field, {
-            required: 'This field is required',
+            required: 'Поле обязательно для заполнения',
             pattern: {
               value: Regexp[field].pattern,
               message: Regexp[field].message,
             },
           })}
+          onChange={handleTrim}
         />
       </label>
       {<div className="error">{error[field]?.message?.toString()}</div>}

@@ -1,6 +1,9 @@
 .notification {
   margin: 0 auto;
-  padding: 8px 12px 8px 44px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
   background-color: #fafafa;
   width: fit-content;
   border-radius: 12px;
@@ -10,11 +13,14 @@
   line-height: 120%;
   letter-spacing: -0.02em;
   color: #0d0c0c;
-  &::before {
-    content: url('../../../../assets/note.svg');
-    position: absolute;
-    left: 15px;
-    top: 50%;
-    transform: translateY(-50%);
+
+  &__icon {
+    min-width: 20px;
+    min-height: 20px;
+    margin-right: 12px;
+  }
+
+  &.error {
+    fill: green;
   }
 }

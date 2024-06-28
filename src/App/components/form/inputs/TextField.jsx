@@ -1,46 +1,39 @@
 import { useState } from 'react';
 import styles from './text-field.module.scss';
-import Regexp from './patterns';
+import { useFormContext } from 'react-hook-form';
 
-const TextField = ({
-  label,
-  field,
-  type = 'text',
-  placeholder,
-  register,
-  error,
-  value = '',
-  handleTrim,
-  isHide = false,
-}) => {
+const TextField = ({ label, field, type = 'text', placeholder, handleTrim, isHide = false, validationRules }) => {
+  const {
+    register,
+    setValue,
+    formState: { errors },
+  } = useFormContext();
   const [showPassword, setShowPassword] = useState(false);
-
   const toggleShowPassword = () => {
     setShowPassword((prevState) => !prevState);
   };
+
+  const clearInput = () => {
+    setValue(field, '');
+  };
   return (
-    <div className={isHide ? styles.hide : ''}>
+    <div className={` ${isHide ? styles.hide : styles.container}`}>
       <label className={styles.label} htmlFor={field}>
         <div className={styles.label__title}>{label}</div>
+
         <input
           type={showPassword ? 'text' : type}
           id={field}
           placeholder={placeholder}
-          defaultValue={value}
-          {...register(field, {
-            required: 'Поле обязательно для заполнения',
-            pattern: {
-              value: Regexp[field].pattern,
-              message: Regexp[field].message,
-            },
-          })}
+          {...register(field, validationRules)}
           onChange={handleTrim}
         />
+        {type === 'text' && <button onClick={clearInput}></button>}
       </label>
-      {<div className="error">{error[field]?.message?.toString()}</div>}
-      {type === 'password' && type === field && (
-        <label htmlFor="chk" className={'styles.pass_label'}>
-          <input type="checkbox" id="chk" onChange={toggleShowPassword} checked={showPassword} />
+      {<div className={styles.error}>{errors[field]?.message?.toString()}</div>}
+      {type === 'password' && (
+        <label className={styles.pass__label}>
+          <input type="checkbox" onChange={toggleShowPassword} checked={showPassword} />
         </label>
       )}
     </div>

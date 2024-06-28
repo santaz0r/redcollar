@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 import Modal from '../Modal/Modal';
 import CheckEmailForm from '../form/CheckEmailForm';
-import rclogo from '../../../assets/rclogo.svg';
+import Rclogo from '../../../assets/rclogo.svg';
 import styles from './header.module.scss';
 import common from '../../../styles/_common.module.scss';
 import { getCurrentuserData, getIsLogin } from '../../store/users';
@@ -24,7 +24,8 @@ const Header = ({ today, handleNext, handlePrev }) => {
     <header className={styles.header}>
       <div className={styles.header__item}>
         <div className={styles.header__logo}>
-          <img src={rclogo} alt="red collar logo" />
+          <Rclogo />
+          {/* <img src={rclogo} alt="red collar logo" /> */}
         </div>
         <div className={styles.header__name}>red collar</div>
         <div className={styles.header__app}>

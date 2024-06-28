@@ -54,6 +54,67 @@
       }
     }
   }
+  button {
+    position: absolute;
+    right: 20px;
+    top: -5px;
+
+    width: 15px;
+    height: 15px;
+    mask-image: url('../../../../assets/cross.svg');
+    mask-repeat: no-repeat;
+    mask-position: 50% 50%;
+    background-color: gray;
+  }
+}
+
+.pass__label {
+  position: absolute;
+  top: 15%;
+  right: 5%;
+  input {
+    appearance: none;
+    width: 32px;
+    height: 32px;
+    font-size: 18px;
+    line-height: 120%;
+    letter-spacing: -0.02em;
+    color: #0d0c0c;
+    position: relative;
+    cursor: inherit;
+    &:checked {
+      &::after {
+        content: '';
+        background-image: url('./openEye.svg');
+        background-repeat: no-repeat;
+        background-position: 50% 50%;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+      }
+    }
+    &:not(:checked) {
+      &::after {
+        content: '';
+        background-image: url('./closedEye.svg');
+        background-repeat: no-repeat;
+        background-position: 50% 50%;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+      }
+    }
+  }
+}
+
+.container {
+  text-align: center;
+  position: relative;
+  width: 345px;
+  & .error {
+    text-align: left;
+    color: #f51b1b;
+  }
 }
 .hide {
   display: none;

@@ -25,7 +25,6 @@ const Header = ({ today, handleNext, handlePrev }) => {
       <div className={styles.header__item}>
         <div className={styles.header__logo}>
           <Rclogo />
-          {/* <img src={rclogo} alt="red collar logo" /> */}
         </div>
         <div className={styles.header__name}>red collar</div>
         <div className={styles.header__app}>

@@ -70,7 +70,8 @@
 
 .pass__label {
   position: absolute;
-  top: 15%;
+  top: 60%;
+  transform: translateY(-50%);
   right: 5%;
   input {
     appearance: none;

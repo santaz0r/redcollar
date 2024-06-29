@@ -3,7 +3,7 @@ import { GallerySwiper } from '../Swiper/Swiper';
 import styles from './event.module.scss';
 import common from '../../../styles/_common.module.scss';
 import moment from 'moment';
-import Notification from '../ui/notification/Notification';
+import Notification from '../ui/Notification/Notification';
 import notifications from '../../utils/notificationsList';
 
 const EventInfo = ({ eventData, onClose }) => {

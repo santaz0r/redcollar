@@ -6,9 +6,10 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUsersList, login, signUp } from '../../store/users';
 import notifications from '../../utils/notificationsList';
-import Notification from '../ui/notification/Notification';
+import Notification from '../ui/Notification/Notification';
 import Regexp from './inputs/patterns';
 import isInRange from '../../utils/isInRange';
+import MyButton from '../ui/Button/Button';
 
 const CheckEmailForm = ({ setCurrentModal, setActive, onClose }) => {
   const dispatch = useDispatch();
@@ -18,8 +19,6 @@ const CheckEmailForm = ({ setCurrentModal, setActive, onClose }) => {
   const isCheck = checkStatus === 'check';
   const isLogin = checkStatus === 'login';
   const isRegistration = checkStatus === 'registration';
-
-  // const [isRegistration, setIsRegistration] = useState(false);
 
   const methods = useForm({ mode: 'onSubmit' });
   const {
@@ -62,9 +61,9 @@ const CheckEmailForm = ({ setCurrentModal, setActive, onClose }) => {
         <div className={styles.check__wrapper}>
           {combineCheckLogin && <h2 className={styles.check__title}>Вход</h2>}
           {isRegistration && <h2 className={styles.check__title}>Регистрация</h2>}
-          <form onSubmit={onSubmit} className={styles.check__form}>
+          <form onSubmit={onSubmit} className={`${styles.check__form} ${styles.form}`}>
             {combineCheckLogin && (
-              <>
+              <div className={styles.form__wrapper}>
                 <TextField
                   label="E-mail"
                   field="email"
@@ -92,17 +91,9 @@ const CheckEmailForm = ({ setCurrentModal, setActive, onClose }) => {
                   }}
                 />
 
-                {isCheck && (
-                  <button onClick={handleCheck} type="button" disabled={hasError}>
-                    Далее
-                  </button>
-                )}
-                {isLogin && (
-                  <button onClick={onSubmit} type="submit" disabled={hasError}>
-                    Войти
-                  </button>
-                )}
-              </>
+                {isCheck && <MyButton disabledOption={hasError} onClick={handleCheck} title={'Далее'} />}
+                {isLogin && <MyButton disabledOption={hasError} type={'submit'} onClick={onSubmit} title={'Войти'} />}
+              </div>
             )}
             {isRegistration && (
               <>
@@ -111,53 +102,51 @@ const CheckEmailForm = ({ setCurrentModal, setActive, onClose }) => {
                   classes={styles.check__notification}
                   hasError={errors.password || errors.repassword}
                 />
+                <div className={styles.form__wrapper}>
+                  <TextField
+                    label="Ваше имя"
+                    field="name"
+                    placeholder={'Введите имя'}
+                    handleTrim={handleTrim}
+                    validationRules={{
+                      required: 'Поле обязательно для заполнения',
+                      pattern: {
+                        value: Regexp['name'].pattern,
+                        message: Regexp['name'].message,
+                      },
+                    }}
+                  />
 
-                <TextField
-                  label="Ваше имя"
-                  field="name"
-                  placeholder={'Введите имя'}
-                  handleTrim={handleTrim}
-                  validationRules={{
-                    required: 'Поле обязательно для заполнения',
-                    pattern: {
-                      value: Regexp['name'].pattern,
-                      message: Regexp['name'].message,
-                    },
-                  }}
-                />
+                  <TextField
+                    label="Пароль"
+                    field="password"
+                    placeholder={'Введите пароль'}
+                    type="password"
+                    handleTrim={handleTrim}
+                    validationRules={{
+                      validate: {
+                        isLongEnough: (value) => isInRange(isLongEnough.pattern, value.length) || isLongEnough.message,
+                        hasNumber: (value) => hasNumber.pattern.test(value) || hasNumber.message,
+                        hasUpperCase: (value) => hasUpperCase.pattern.test(value) || hasUpperCase.message,
+                        hasLowerCase: (value) => hasLowerCase.pattern.test(value) || hasLowerCase.message,
+                        hasSymbol: (value) => hasSymbol.pattern.test(value) || hasSymbol.message,
+                      },
+                    }}
+                  />
 
-                <TextField
-                  label="Пароль"
-                  field="password"
-                  placeholder={'Введите пароль'}
-                  type="password"
-                  handleTrim={handleTrim}
-                  validationRules={{
-                    validate: {
-                      isLongEnough: (value) => isInRange(isLongEnough.pattern, value.length) || isLongEnough.message,
-                      hasNumber: (value) => hasNumber.pattern.test(value) || hasNumber.message,
-                      hasUpperCase: (value) => hasUpperCase.pattern.test(value) || hasUpperCase.message,
-                      hasLowerCase: (value) => hasLowerCase.pattern.test(value) || hasLowerCase.message,
-                      hasSymbol: (value) => hasSymbol.pattern.test(value) || hasSymbol.message,
-                    },
-                  }}
-                />
-
-                <TextField
-                  label="Повторите пароль"
-                  field="repassword"
-                  placeholder={'Введите пароль'}
-                  type="password"
-                  validationRules={{
-                    validate: {
-                      validate: (value) => value === passwordWatch || 'Пароли не совпадают',
-                    },
-                  }}
-                />
-
-                <button onClick={onSubmit} type="submit">
-                  Зарегистрироваться
-                </button>
+                  <TextField
+                    label="Повторите пароль"
+                    field="repassword"
+                    placeholder={'Введите пароль'}
+                    type="password"
+                    validationRules={{
+                      validate: {
+                        validate: (value) => value === passwordWatch || 'Пароли не совпадают',
+                      },
+                    }}
+                  />
+                  <MyButton type="submit" onClick={onSubmit} title={'Зарегистрироваться'} />
+                </div>
               </>
             )}
           </form>

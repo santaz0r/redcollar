@@ -20,7 +20,7 @@ const MainLayout = () => {
 
   // useEffect(() => {
   //   if (isLoggedIn) {
-  //     dispatch(loadTodosList());
+  //     dispatch(loadEventsList());
   //     dispatch(loadUsersList());
   //   }
   // }, [isLoggedIn]);

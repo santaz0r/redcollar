@@ -1,0 +1,45 @@
+.event {
+  cursor: pointer;
+  background-color: #efefef;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 140%;
+  letter-spacing: -0.02em;
+
+  color: #0d0c0c;
+  border-radius: 8px;
+  &__passed {
+    opacity: 0.5;
+    color: gray;
+  }
+
+  &__wrapper {
+    display: flex;
+    align-items: center;
+  }
+
+  &__star,
+  &__dot {
+    margin-right: 5px;
+  }
+
+  &__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #f51b1b;
+  }
+
+  &__star {
+    min-width: 16px;
+    height: 16px;
+    background-repeat: no-repeat;
+    background-image: url('./Star.svg');
+    background-position: center;
+  }
+
+  &:has(div.event__star) {
+    background-color: #f51b1b;
+    color: #fff;
+  }
+}

@@ -65,19 +65,3 @@
 .current_month {
   color: #a4a4a4;
 }
-
-.event {
-  cursor: pointer;
-  background-color: #efefef;
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 140%;
-  letter-spacing: -0.02em;
-
-  color: #0d0c0c;
-  border-radius: 8px;
-  &__passed {
-    opacity: 0.5;
-    color: gray;
-  }
-}

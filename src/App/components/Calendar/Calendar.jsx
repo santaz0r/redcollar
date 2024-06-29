@@ -3,6 +3,7 @@ import styles from './calendar.module.scss';
 import { useState } from 'react';
 import Modal from '../Modal/Modal';
 import EventInfo from '../EventInfo/EventInfo';
+import EventBadge from '../ui/EventBadge/EventBadge';
 
 const Calendar = ({ startDay, momentInst, totalDays, events }) => {
   const day = startDay.clone().subtract(1, 'day');
@@ -70,13 +71,14 @@ const Calendar = ({ startDay, momentInst, totalDays, events }) => {
                 {events
                   .filter((e) => i.isSame(e.dateStart, 'day'))
                   .map((e) => (
-                    <button
-                      onClick={() => handleClick(e)}
+                    <EventBadge
                       key={e.id}
-                      className={`${!isPassed(e.dateStart) ? styles.event : `${styles.event} ${styles.event__passed}`}`}
-                    >
-                      {e.title}
-                    </button>
+                      title={e.title}
+                      onClick={() => handleClick(e)}
+                      isPassed={!isPassed(e.dateStart)}
+                      participants={e.participants}
+                      owner={e.owner}
+                    />
                   ))}
               </div>
             </div>

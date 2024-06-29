@@ -1,0 +1,21 @@
+.profiler {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &__photo {
+    min-width: 80px;
+    min-height: 80px;
+    background-image: url('./nophoto.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  &__btn {
+    width: 86px;
+    height: 60px;
+    background-image: url('./plus.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-right: 30px;
+  }
+}

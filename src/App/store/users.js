@@ -5,11 +5,11 @@ import authService from '../services/auth.service';
 
 const initialState = {
   entities: [],
-  isLoading: true,
+  isLoading: false,
   dataError: '',
   user: null,
   isLoggedIn: false,
-
+  dataLoad: false,
   userError: '',
 };
 
@@ -18,18 +18,19 @@ const usersSlice = createSlice({
   initialState,
   reducers: {
     usersRequested: (state) => {
-      state.isLoading = true;
+      state.dataLoad = true;
     },
     usersReceived: (state, action) => {
       state.entities = action.payload;
-      state.isLoading = false;
+      state.dataLoad = false;
     },
     usersRequestFailed: (state, action) => {
       state.dataError = action.payload;
-      state.isLoading = false;
+      state.dataLoad = false;
     },
     authRequested: (state) => {
       state.userError = '';
+      state.isLoading = true;
     },
     authRequestSuccess: (state, action) => {
       state.user = action.payload;
@@ -38,16 +39,17 @@ const usersSlice = createSlice({
     authRequestFailed: (state, action) => {
       state.userError = action.payload;
     },
-    dataLoad: (state, action) => {
+    userLoad: (state, action) => {
       state.isLoading = action.payload;
     },
   },
 
   selectors: {
-    getUsersLoadingStatus: (state) => state.isLoading,
+    getUsersLoadingStatus: (state) => state.dataLoad,
     getUsersList: (state) => state.entities,
     getIsLogin: (state) => state.isLoggedIn,
     getCurrentuserData: (state) => state.user,
+    getUserLoadingStatus: (state) => state.isLoading,
   },
 });
 
@@ -60,9 +62,9 @@ const {
   authRequestSuccess,
   authRequestFailed,
   authRequested,
-  dataLoad,
+  userLoad,
 } = actions;
-export const { getUsersList, getUsersLoadingStatus, getCurrentuserData, getIsLogin } = selectors;
+export const { getUsersList, getUserLoadingStatus, getUsersLoadingStatus, getCurrentuserData, getIsLogin } = selectors;
 
 export const login =
   ({ payload, setActive }) =>
@@ -101,7 +103,7 @@ export const signUp =
   };
 
 export const checkAuth = (token) => async (dispatch) => {
-  dispatch(dataLoad(true));
+  dispatch(userLoad(true));
   try {
     const response = await usersService.getMe(token);
     dispatch(authRequestSuccess(response));
@@ -112,7 +114,7 @@ export const checkAuth = (token) => async (dispatch) => {
       console.log(message);
     }
   } finally {
-    dispatch(dataLoad(false));
+    dispatch(userLoad(false));
   }
 };
 

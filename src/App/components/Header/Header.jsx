@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useState } from 'react';
 
 import Modal from '../Modal/Modal';
@@ -7,6 +7,7 @@ import Rclogo from '../../../assets/rclogo.svg';
 import styles from './header.module.scss';
 import common from '../../../styles/_common.module.scss';
 import { getCurrentuserData, getIsLogin } from '../../store/users';
+import UserProfiler from '../UserProfile/UserProfiler';
 
 const Header = ({ today, handleNext, handlePrev }) => {
   const isLoggin = useSelector(getIsLogin);
@@ -38,8 +39,9 @@ const Header = ({ today, handleNext, handlePrev }) => {
           <button onClick={handleNext} className={`${styles.header__btn} ${common.nav__btn}`}></button>
         </div>
         {isLoggin ? (
-          currentUser.username
+          <UserProfiler />
         ) : (
+          // currentUser.username
           <button onClick={handleClick} className={styles.auth__btn}>
             Войти
           </button>

@@ -7,6 +7,8 @@ const initialState = {
   isLoading: true,
   createError: '',
   dataError: '',
+
+  joinError: '',
 };
 
 const eventsSlice = createSlice({
@@ -24,6 +26,18 @@ const eventsSlice = createSlice({
       state.dataError = action.payload;
       state.isLoading = false;
     },
+
+    eventJoinRequest: (state) => {
+      state.joinError = '';
+    },
+
+    eventJoin: (state, action) => {
+      state.entities = action.payload;
+    },
+
+    eventJoinFailed: (state, action) => {
+      state.joinError = action.payload;
+    },
   },
   selectors: {
     getEventsLoadingStatus: (state) => state.isLoading,
@@ -33,9 +47,24 @@ const eventsSlice = createSlice({
 
 const { actions, reducer: eventsReducer, selectors } = eventsSlice;
 
-const { eventsReceived, eventsRequestFailed, eventsRequested } = actions;
+const { eventsReceived, eventsRequestFailed, eventsRequested, eventJoin, eventJoinFailed, eventJoinRequest } = actions;
 
 export const { getEventsList, getEventsLoadingStatus } = selectors;
+
+export const joinEvent =
+  ({ payload, setActive }) =>
+  async (dispatch) => {
+    dispatch(eventJoinRequest());
+    try {
+      const data = await eventsService.joinEvent(payload);
+      dispatch(eventJoin(data.data));
+      setActive();
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        dispatch(eventJoinFailed(error.message));
+      }
+    }
+  };
 
 export const loadEventsList = () => async (dispatch) => {
   dispatch(eventsRequested());

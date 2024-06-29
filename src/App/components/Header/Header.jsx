@@ -12,7 +12,6 @@ import UserProfiler from '../UserProfile/UserProfiler';
 const Header = ({ today, handleNext, handlePrev }) => {
   const isLoggin = useSelector(getIsLogin);
   const currentUser = useSelector(getCurrentuserData);
-  console.log(isLoggin, currentUser);
   const [isModalActive, setIsModalActive] = useState(false);
   // const [currentModal, setCurrentModal] = useState<'register' | 'login'>('register');
   const month = today.format('MMMM');

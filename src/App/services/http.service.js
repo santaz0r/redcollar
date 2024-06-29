@@ -5,6 +5,11 @@ const http = axios.create({
   baseURL: configFile.apiEndpoint,
 });
 
+http.interceptors.request.use((config) => {
+  config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
+  return config;
+});
+
 const httpService = {
   get: http.get,
   post: http.post,

@@ -5,9 +5,15 @@ import common from '../../../styles/_common.module.scss';
 import moment from 'moment';
 import Notification from '../ui/Notification/Notification';
 import notifications from '../../utils/notificationsList';
+import MyButton from '../ui/Button/Button';
+import { useDispatch, useSelector } from 'react-redux';
+import { joinEvent } from '../../store/events';
+import { getCurrentuserData } from '../../store/users';
 
 const EventInfo = ({ eventData, onClose }) => {
+  const dispatch = useDispatch();
   const { title, description, location, dateStart, owner, participants, photos } = eventData;
+  const currentUser = useSelector(getCurrentuserData);
   const ownerFirst = moveToFirst(participants, owner);
   const day = moment.utc(dateStart).format('dddd');
   const date = moment.utc(dateStart).format('D MMMM');
@@ -20,6 +26,15 @@ const EventInfo = ({ eventData, onClose }) => {
   };
 
   const handleClose = () => onClose();
+
+  const handleJoin = (eventInfo) => {
+    const newInfo = {
+      ...eventInfo,
+      participants: eventInfo.participants.concat(currentUser),
+    };
+    // console.log(eventInfo, newInfo);
+    dispatch(joinEvent({ payload: newInfo, setActive: onClose }));
+  };
 
   return (
     <div className={setPassed()}>
@@ -56,7 +71,13 @@ const EventInfo = ({ eventData, onClose }) => {
           <GallerySwiper elements={photos} />
         </div>
       </div>
-      {!isPassed && <div className={styles.event__enter}>принять</div>}
+      {!isPassed && (
+        <MyButton
+          classes={styles.event__enter}
+          onClick={() => handleJoin(eventData)}
+          title={'Присоединиться к событию'}
+        />
+      )}
       <button className={common.modal__btn_close} onClick={handleClose}></button>
     </div>
   );

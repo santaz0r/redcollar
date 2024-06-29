@@ -7,7 +7,6 @@ const EventBadge = ({ isPassed, title, onClick, participants, owner }) => {
   const currentUser = useSelector(getCurrentuserData);
   const amIOwner = owner.id === currentUser?.id;
   const amIMember = participants.some((u) => u.id === currentUser?.id);
-  console.log(participants, owner, amIOwner, amIMember);
 
   return (
     <button onClick={onClick} className={isPassed ? styles.event : `${styles.event} ${styles.event__passed}`}>

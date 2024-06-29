@@ -8,10 +8,23 @@ const eventsService = {
     const { data } = await httpService.get(`${eventsEndPoint}${query}`);
     return data;
   },
-  //   createTodo: async (payload) => {
-  //     const { data } = await httpService.post(eventsEndPoint, payload);
-  //     return data;
-  //   },
+
+  joinEvent: async (payload) => {
+    const membersId = payload.participants.map((i) => i.id);
+    const photoId = payload.photos.map((i) => i.id);
+    const ownerId = payload.owner.id;
+
+    const transformed = {
+      ...payload,
+      participants: membersId,
+      photos: photoId,
+      owner: ownerId,
+    };
+    await httpService.put(`${eventsEndPoint}/${payload.id}`, { data: transformed });
+    const { data } = await httpService.get(`${eventsEndPoint}${query}`);
+
+    return data;
+  },
 };
 
 export default eventsService;

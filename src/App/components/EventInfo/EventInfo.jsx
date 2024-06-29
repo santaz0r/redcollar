@@ -80,6 +80,7 @@ const EventInfo = ({ eventData, onClose }) => {
           <GallerySwiper elements={photos} />
         </div>
       </div>
+
       {amIMember ? (
         <div className={styles.event__leave}>
           Вы присоединились к событию. Если передумали, можете

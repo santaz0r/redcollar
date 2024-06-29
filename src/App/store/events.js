@@ -56,7 +56,7 @@ export const toggleEvent =
   async (dispatch) => {
     dispatch(eventJoinRequest());
     try {
-      const data = await eventsService.joinEvent(payload);
+      const data = await eventsService.joinLeaveEvent(payload);
       dispatch(eventJoin(data.data));
       onCloseModal();
     } catch (error) {

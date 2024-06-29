@@ -9,7 +9,7 @@ const eventsService = {
     return data;
   },
 
-  joinEvent: async (payload) => {
+  toggleEvent: async (payload) => {
     const membersId = payload.participants.map((i) => i.id);
     const photoId = payload.photos.map((i) => i.id);
     const ownerId = payload.owner.id;

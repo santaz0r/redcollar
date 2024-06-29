@@ -7,13 +7,15 @@ import Notification from '../ui/Notification/Notification';
 import notifications from '../../utils/notificationsList';
 import MyButton from '../ui/Button/Button';
 import { useDispatch, useSelector } from 'react-redux';
-import { joinEvent } from '../../store/events';
-import { getCurrentuserData } from '../../store/users';
+import { toggleEvent } from '../../store/events';
+import { getCurrentuserData, getIsLogin } from '../../store/users';
 
 const EventInfo = ({ eventData, onClose }) => {
   const dispatch = useDispatch();
   const { title, description, location, dateStart, owner, participants, photos } = eventData;
   const currentUser = useSelector(getCurrentuserData);
+  const isLoggedIn = useSelector(getIsLogin);
+  const amIMember = eventData.participants.some((u) => u.id === currentUser?.id);
   const ownerFirst = moveToFirst(participants, owner);
   const day = moment.utc(dateStart).format('dddd');
   const date = moment.utc(dateStart).format('D MMMM');
@@ -32,8 +34,15 @@ const EventInfo = ({ eventData, onClose }) => {
       ...eventInfo,
       participants: eventInfo.participants.concat(currentUser),
     };
-    // console.log(eventInfo, newInfo);
-    dispatch(joinEvent({ payload: newInfo, setActive: onClose }));
+    dispatch(toggleEvent({ payload: newInfo, onCloseModal: onClose }));
+  };
+
+  const handleLeave = (eventInfo) => {
+    const newInfo = {
+      ...eventInfo,
+      participants: eventInfo.participants.filter((i) => i.id !== currentUser.id),
+    };
+    dispatch(toggleEvent({ payload: newInfo, onCloseModal: onClose }));
   };
 
   return (
@@ -71,13 +80,25 @@ const EventInfo = ({ eventData, onClose }) => {
           <GallerySwiper elements={photos} />
         </div>
       </div>
-      {!isPassed && (
+      {amIMember ? (
+        <div className={styles.event__leave}>
+          Вы присоединились к событию. Если передумали, можете
+          <button onClick={() => handleLeave(eventData)}>отменить участие.</button>
+        </div>
+      ) : (
+        <MyButton
+          classes={styles.event__join}
+          onClick={() => handleJoin(eventData)}
+          title={'Присоединиться к событию'}
+        />
+      )}
+      {/* {!isPassed && (
         <MyButton
           classes={styles.event__enter}
           onClick={() => handleJoin(eventData)}
           title={'Присоединиться к событию'}
         />
-      )}
+      )} */}
       <button className={common.modal__btn_close} onClick={handleClose}></button>
     </div>
   );

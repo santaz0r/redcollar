@@ -51,14 +51,14 @@ const { eventsReceived, eventsRequestFailed, eventsRequested, eventJoin, eventJo
 
 export const { getEventsList, getEventsLoadingStatus } = selectors;
 
-export const joinEvent =
-  ({ payload, setActive }) =>
+export const toggleEvent =
+  ({ payload, onCloseModal }) =>
   async (dispatch) => {
     dispatch(eventJoinRequest());
     try {
       const data = await eventsService.joinEvent(payload);
       dispatch(eventJoin(data.data));
-      setActive();
+      onCloseModal();
     } catch (error) {
       if (axios.isAxiosError(error)) {
         dispatch(eventJoinFailed(error.message));

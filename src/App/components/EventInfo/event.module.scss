@@ -92,6 +92,19 @@
       }
     }
   }
+
+  &__leave {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: -0.02em;
+    color: #0d0c0c;
+    button {
+      color: #f51b1b;
+      cursor: pointer;
+      background-color: transparent;
+    }
+  }
 }
 
 .participants {

@@ -14,7 +14,7 @@ export const GallerySwiper = ({ elements }) => {
       pagination
       navigation={{ nextEl: `.${common.swiper__btn_next}`, prevEl: `.${common.swiper__btn_prev}` }}
       spaceBetween={16}
-      slidesPerView={3}
+      slidesPerView={2}
     >
       {elements.map((i) => (
         <SwiperSlide key={i.id}>

@@ -1,9 +1,16 @@
 import styles from './btn.module.scss';
 
-const MyButton = ({ title, onClick, classes, type = 'button', disabledOption }) => {
+const MyButton = ({ children, onClick, classes, type = 'button', disabledOption = false, primary = true }) => {
+  const setClass = () => (primary ? styles.primary : styles.secondary);
+
   return (
-    <button className={`${styles.btn} ${classes}`} onClick={onClick} type={type} disabled={disabledOption}>
-      {title}
+    <button
+      className={`${styles.btn} ${classes} ${setClass()}`}
+      onClick={onClick}
+      type={type}
+      disabled={disabledOption}
+    >
+      {children}
     </button>
   );
 };

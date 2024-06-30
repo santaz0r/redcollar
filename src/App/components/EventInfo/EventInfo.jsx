@@ -9,8 +9,13 @@ import MyButton from '../ui/Button/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleEvent } from '../../store/events';
 import { getCurrentuserData, getIsLogin } from '../../store/users';
+import { useState } from 'react';
+import Modal from '../Modal/Modal';
+import Confirm from '../Confirm/Confirm';
 
-const EventInfo = ({ eventData, onClose }) => {
+const EventInfo = ({ setCurrentModal, eventData, onClose }) => {
+  const [isModalActive, setModalActive] = useState(false);
+  // const [currentModal, setCurrentModalConfirm] = useState('');
   const dispatch = useDispatch();
   const { title, description, location, dateStart, owner, participants, photos } = eventData;
   const currentUser = useSelector(getCurrentuserData);
@@ -28,13 +33,17 @@ const EventInfo = ({ eventData, onClose }) => {
   };
 
   const handleClose = () => onClose();
+  const handleCloseConfirm = () => {
+    setModalActive(false);
+    onClose();
+  };
 
   const handleJoin = (eventInfo) => {
     const newInfo = {
       ...eventInfo,
       participants: eventInfo.participants.concat(currentUser),
     };
-    dispatch(toggleEvent({ payload: newInfo, onCloseModal: onClose }));
+    dispatch(toggleEvent({ payload: newInfo, setNewModal: setCurrentModal }));
   };
 
   const handleLeave = (eventInfo) => {
@@ -42,11 +51,18 @@ const EventInfo = ({ eventData, onClose }) => {
       ...eventInfo,
       participants: eventInfo.participants.filter((i) => i.id !== currentUser.id),
     };
-    dispatch(toggleEvent({ payload: newInfo, onCloseModal: onClose }));
+    dispatch(toggleEvent({ payload: newInfo, setNewModal: handleCloseConfirm, isJoin: false }));
   };
+
+  const handleChangeModal = (data) => setCurrentModal(data);
 
   return (
     <div className={setPassed()}>
+      {isModalActive && (
+        <Modal setActive={setModalActive}>
+          <Confirm onLeave={() => handleLeave(eventData)} onClose={handleCloseConfirm} />
+        </Modal>
+      )}
       <h2 className={styles.event__title}>{title}</h2>
       {isPassed && <Notification text={notifications.eventPassed} classes={styles.event__notification} />}
       <div className={styles.event__info}>
@@ -80,26 +96,29 @@ const EventInfo = ({ eventData, onClose }) => {
           <GallerySwiper elements={photos} />
         </div>
       </div>
-
-      {amIMember ? (
-        <div className={styles.event__leave}>
-          Вы присоединились к событию. Если передумали, можете
-          <button onClick={() => handleLeave(eventData)}>отменить участие.</button>
-        </div>
-      ) : (
-        <MyButton
-          classes={styles.event__join}
-          onClick={() => handleJoin(eventData)}
-          title={'Присоединиться к событию'}
-        />
+      {!isPassed && (
+        <>
+          {isLoggedIn ? (
+            <>
+              {amIMember ? (
+                <div className={styles.event__notice}>
+                  Вы присоединились к событию. Если передумали, можете
+                  <button onClick={() => setModalActive(true)}>отменить участие.</button>
+                </div>
+              ) : (
+                <MyButton classes={styles.event__join} onClick={() => handleJoin(eventData)}>
+                  Присоединиться к событию
+                </MyButton>
+              )}
+            </>
+          ) : (
+            <div className={styles.event__notice}>
+              <button onClick={() => handleChangeModal('login')}>Войдите</button>, чтобы присоединиться к событию
+            </div>
+          )}
+        </>
       )}
-      {/* {!isPassed && (
-        <MyButton
-          classes={styles.event__enter}
-          onClick={() => handleJoin(eventData)}
-          title={'Присоединиться к событию'}
-        />
-      )} */}
+
       <button className={common.modal__btn_close} onClick={handleClose}></button>
     </div>
   );

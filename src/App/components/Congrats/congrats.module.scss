@@ -1,0 +1,69 @@
+.congrats {
+  border-radius: 64px;
+  width: 770px;
+  height: 510px;
+  background-color: #fff;
+  position: relative;
+  padding: 80px 80px 64px 80px;
+  color: #0d0c0c;
+  font-weight: 500;
+
+  background-image: url('./hand.png');
+  background-repeat: no-repeat;
+  background-position: 93% 0;
+
+  &__title {
+    font-weight: 600;
+    font-size: 64px;
+    line-height: 120%;
+    letter-spacing: -0.04em;
+    margin-bottom: 16px;
+  }
+
+  &__subtitle {
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: -0.02em;
+    margin-bottom: 70px;
+    span {
+      display: block;
+      color: #f51b1b;
+    }
+  }
+
+  &__info {
+    margin-bottom: 40px;
+  }
+
+  &__date {
+    display: flex;
+
+    font-size: 20px;
+    line-height: 100%;
+    letter-spacing: -0.02em;
+    font-weight: 800;
+
+    margin-bottom: 8px;
+    div {
+      border-right: 1px solid gray;
+      padding-right: 16px;
+      margin-right: 16px;
+      &:last-child {
+        padding-right: 0;
+        margin-right: 0;
+        border-right: none;
+      }
+    }
+  }
+
+  &__location {
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 140%;
+    letter-spacing: -0.02em;
+  }
+
+  &__btn {
+    width: 147px;
+  }
+}

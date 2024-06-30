@@ -1,0 +1,37 @@
+.confirm {
+  position: relative;
+  border-radius: 64px;
+  width: 710px;
+  height: 340px;
+  background: #fff;
+  padding: 80px 95px 65px;
+  color: #0d0c0c;
+
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__title {
+    font-weight: 500;
+    font-size: 36px;
+    line-height: 100%;
+    letter-spacing: -0.02em;
+    text-align: center;
+
+    margin-bottom: 64px;
+  }
+
+  &__btns {
+    display: flex;
+  }
+
+  &__btn {
+    width: 100px;
+    &:first-child {
+      margin-right: 24px;
+    }
+  }
+}

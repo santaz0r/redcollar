@@ -7,6 +7,7 @@ import { checkAuth, getUsersLoadingStatus, loadUsersList } from '../store/users'
 const MainLayout = () => {
   const isEventsLoading = useSelector(getEventsLoadingStatus);
   const isUsersLoading = useSelector(getUsersLoadingStatus);
+
   const dispatch = useDispatch();
 
   useEffect(() => {

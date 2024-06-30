@@ -4,10 +4,14 @@ import { useState } from 'react';
 import Modal from '../Modal/Modal';
 import EventInfo from '../EventInfo/EventInfo';
 import EventBadge from '../ui/EventBadge/EventBadge';
+import CheckEmailForm from '../form/CheckEmailForm';
+import Congrats from '../Congrats/Congrats';
 
 const Calendar = ({ startDay, momentInst, totalDays, events }) => {
   const day = startDay.clone().subtract(1, 'day');
   const [isModalActive, setModalActive] = useState(false);
+  const [currentModal, setCurrentModal] = useState('event');
+
   const [eventInfo, setEventInfo] = useState(null);
   const daysArr = [...Array(totalDays)].map(() => day.add(1, 'day').clone());
   const setWeekend = (day) => {
@@ -19,6 +23,7 @@ const Calendar = ({ startDay, momentInst, totalDays, events }) => {
     console.log(event);
     setModalActive(true);
     setEventInfo(event);
+    setCurrentModal('event');
   };
 
   const handleModalClose = () => setModalActive(false);
@@ -37,7 +42,13 @@ const Calendar = ({ startDay, momentInst, totalDays, events }) => {
     <>
       {isModalActive && (
         <Modal setActive={setModalActive}>
-          <EventInfo eventData={eventInfo} onClose={handleModalClose} />
+          {currentModal === 'event' ? (
+            <EventInfo setCurrentModal={setCurrentModal} eventData={eventInfo} onClose={handleModalClose} />
+          ) : currentModal === 'login' ? (
+            <CheckEmailForm onClose={handleModalClose} setActive={setModalActive} />
+          ) : (
+            <Congrats eventData={eventInfo} onClose={handleModalClose} />
+          )}
         </Modal>
       )}
       <div className={`${styles.calendar} ${styles.calendar__header}`}>

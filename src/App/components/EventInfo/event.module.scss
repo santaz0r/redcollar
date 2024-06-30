@@ -2,7 +2,7 @@
 
 .event {
   width: 60vw;
-  height: 90vh;
+
   background-color: #fff;
   border-radius: 64px;
   padding: 80px 64px;
@@ -93,7 +93,8 @@
     }
   }
 
-  &__leave {
+  &__notice {
+    text-align: center;
     font-weight: 700;
     font-size: 18px;
     line-height: 100%;

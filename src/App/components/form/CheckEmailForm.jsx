@@ -71,7 +71,7 @@ const CheckEmailForm = ({ setCurrentModal, setActive, onClose }) => {
                   handleTrim={handleTrim}
                   isHide={!isCheck}
                   validationRules={{
-                    required: 'Поле обязательно для заполнения',
+                    required: 'Обязательное поле',
                     pattern: {
                       value: Regexp['email'].pattern,
                       message: Regexp['email'].message,
@@ -91,8 +91,16 @@ const CheckEmailForm = ({ setCurrentModal, setActive, onClose }) => {
                   }}
                 />
 
-                {isCheck && <MyButton disabledOption={hasError} onClick={handleCheck} title={'Далее'} />}
-                {isLogin && <MyButton disabledOption={hasError} type={'submit'} onClick={onSubmit} title={'Войти'} />}
+                {isCheck && (
+                  <MyButton disabledOption={hasError} onClick={handleCheck}>
+                    Далее
+                  </MyButton>
+                )}
+                {isLogin && (
+                  <MyButton disabledOption={hasError} type={'submit'} onClick={onSubmit}>
+                    Войти
+                  </MyButton>
+                )}
               </div>
             )}
             {isRegistration && (

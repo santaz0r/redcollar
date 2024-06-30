@@ -1,0 +1,20 @@
+@use './react-select_overrides.module.scss' as *;
+
+.user {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -2px;
+}
+
+.photo {
+  min-width: 30px;
+  min-height: 30px;
+  border-radius: 50%;
+  background-image: url('./nophoto.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+
+  margin-right: 5px;
+}

@@ -8,15 +8,23 @@ import styles from './header.module.scss';
 import common from '../../../styles/_common.module.scss';
 import { getCurrentuserData, getIsLogin } from '../../store/users';
 import UserProfiler from '../UserProfile/UserProfiler';
+import CreateEventForm from '../form/CreateEventForm/CreateEventForm';
 
 const Header = ({ today, handleNext, handlePrev }) => {
   const isLoggin = useSelector(getIsLogin);
   const currentUser = useSelector(getCurrentuserData);
   const [isModalActive, setIsModalActive] = useState(false);
-  // const [currentModal, setCurrentModal] = useState<'register' | 'login'>('register');
+  const [currentModal, setCurrentModal] = useState('');
+
   const month = today.format('MMMM');
   const handleClick = () => {
     setIsModalActive(true);
+    setCurrentModal('login');
+  };
+
+  const openCreateForm = () => {
+    setIsModalActive(true);
+    setCurrentModal('create');
   };
 
   const handleModalClose = () => setIsModalActive(false);
@@ -38,9 +46,8 @@ const Header = ({ today, handleNext, handlePrev }) => {
           <button onClick={handleNext} className={`${styles.header__btn} ${common.nav__btn}`}></button>
         </div>
         {isLoggin ? (
-          <UserProfiler />
+          <UserProfiler setCurrentModal={openCreateForm} />
         ) : (
-          // currentUser.username
           <button onClick={handleClick} className={styles.auth__btn}>
             Войти
           </button>
@@ -48,7 +55,8 @@ const Header = ({ today, handleNext, handlePrev }) => {
       </div>
       {isModalActive && (
         <Modal setActive={setIsModalActive}>
-          <CheckEmailForm onClose={handleModalClose} setActive={setIsModalActive} />
+          {currentModal === 'login' && <CheckEmailForm onClose={handleModalClose} setActive={setIsModalActive} />}
+          {currentModal === 'create' && <CreateEventForm />}
         </Modal>
       )}
     </header>

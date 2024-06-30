@@ -16,6 +16,7 @@ const TextField = ({ label, field, type = 'text', placeholder, handleTrim, isHid
   const clearInput = () => {
     setValue(field, '');
   };
+
   return (
     <div className={` ${isHide ? styles.hide : styles.container}`}>
       <label className={styles.label} htmlFor={field}>

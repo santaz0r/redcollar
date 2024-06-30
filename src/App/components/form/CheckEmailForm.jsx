@@ -27,6 +27,7 @@ const CheckEmailForm = ({ setCurrentModal, setActive, onClose }) => {
     getValues,
     setValue,
     watch,
+    trigger,
   } = methods;
   const passwordWatch = watch('password');
 
@@ -43,7 +44,9 @@ const CheckEmailForm = ({ setCurrentModal, setActive, onClose }) => {
     isRegistration ? dispatch(signUp({ payload, setActive })) : dispatch(login({ payload, setActive }));
   });
 
-  const handleCheck = () => {
+  const handleCheck = async () => {
+    const isValidate = await trigger('email');
+    if (!isValidate) return;
     const email = getValues('email');
     const isEmailExists = users.some((u) => u.email === email);
     isEmailExists ? setCheckStatus('login') : setCheckStatus('registration');
@@ -91,11 +94,7 @@ const CheckEmailForm = ({ setCurrentModal, setActive, onClose }) => {
                   }}
                 />
 
-                {isCheck && (
-                  <MyButton disabledOption={hasError} onClick={handleCheck}>
-                    Далее
-                  </MyButton>
-                )}
+                {isCheck && <MyButton onClick={handleCheck}>Далее</MyButton>}
                 {isLogin && (
                   <MyButton disabledOption={hasError} type={'submit'} onClick={onSubmit}>
                     Войти
@@ -153,7 +152,9 @@ const CheckEmailForm = ({ setCurrentModal, setActive, onClose }) => {
                       },
                     }}
                   />
-                  <MyButton type="submit" onClick={onSubmit} title={'Зарегистрироваться'} />
+                  <MyButton type="submit" onClick={onSubmit}>
+                    Зарегистрироваться
+                  </MyButton>
                 </div>
               </>
             )}

@@ -1,0 +1,71 @@
+.create {
+  background-color: #fff;
+  padding: 80px 65px 64px;
+  border-radius: 64px;
+  position: relative;
+  color: #0d0c0c;
+  width: 1075px;
+  &__title {
+    font-weight: 500;
+    font-size: 36px;
+    line-height: 100%;
+    letter-spacing: -0.02em;
+    // text-align: center;
+    margin-bottom: 64px;
+  }
+}
+
+.form {
+  &__wrapper {
+    display: grid;
+    margin-bottom: 64px;
+
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    grid-gap: 10px;
+    grid-template-areas:
+      't t t s e'
+      'd d d time time'
+      'd d d l l'
+      'm m m o o'
+      'f f f f f'
+      'f f f f f';
+  }
+
+  &__section {
+    display: flex;
+    justify-content: space-between;
+  }
+  &__item {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.title {
+  grid-area: t;
+}
+.start {
+  grid-area: s;
+}
+.end {
+  grid-area: e;
+}
+.descr {
+  grid-area: d;
+}
+.time {
+  grid-area: time;
+}
+.location {
+  grid-area: l;
+}
+.members {
+  grid-area: m;
+}
+.owner {
+  grid-area: o;
+}
+.files {
+  grid-area: f;
+}

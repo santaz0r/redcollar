@@ -38,7 +38,7 @@ const EventInfo = ({ setCurrentModal, eventData, onClose }) => {
     onClose();
   };
 
-  const handleCloseConfirm = (params) => setModalActive(false);
+  const handleCloseConfirm = () => setModalActive(false);
 
   const handleJoin = (eventInfo) => {
     const newInfo = {

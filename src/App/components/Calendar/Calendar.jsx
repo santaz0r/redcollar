@@ -20,7 +20,6 @@ const Calendar = ({ startDay, momentInst, totalDays, events }) => {
   };
 
   const handleClick = (event) => {
-    console.log(event);
     setModalActive(true);
     setEventInfo(event);
     setCurrentModal('event');
@@ -42,13 +41,11 @@ const Calendar = ({ startDay, momentInst, totalDays, events }) => {
     <>
       {isModalActive && (
         <Modal setActive={setModalActive}>
-          {currentModal === 'event' ? (
+          {currentModal === 'event' && (
             <EventInfo setCurrentModal={setCurrentModal} eventData={eventInfo} onClose={handleModalClose} />
-          ) : currentModal === 'login' ? (
-            <CheckEmailForm onClose={handleModalClose} setActive={setModalActive} />
-          ) : (
-            <Congrats eventData={eventInfo} onClose={handleModalClose} />
           )}
+          {currentModal === 'login' && <CheckEmailForm onClose={handleModalClose} setActive={setModalActive} />}
+          {currentModal === 'congrats' && <Congrats eventData={eventInfo} onClose={handleModalClose} />}
         </Modal>
       )}
       <div className={`${styles.calendar} ${styles.calendar__header}`}>

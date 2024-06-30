@@ -31,7 +31,7 @@ const eventsSlice = createSlice({
       state.joinError = '';
     },
 
-    eventJoin: (state, action) => {
+    eventToggleJoin: (state, action) => {
       state.entities = action.payload;
     },
 
@@ -47,7 +47,8 @@ const eventsSlice = createSlice({
 
 const { actions, reducer: eventsReducer, selectors } = eventsSlice;
 
-const { eventsReceived, eventsRequestFailed, eventsRequested, eventJoin, eventJoinFailed, eventJoinRequest } = actions;
+const { eventsReceived, eventsRequestFailed, eventsRequested, eventToggleJoin, eventJoinFailed, eventJoinRequest } =
+  actions;
 
 export const { getEventsList, getEventsLoadingStatus } = selectors;
 
@@ -57,7 +58,7 @@ export const toggleEvent =
     dispatch(eventJoinRequest());
     try {
       const data = await eventsService.joinLeaveEvent(payload);
-      dispatch(eventJoin(data.data));
+      dispatch(eventToggleJoin(data.data));
       isJoin ? setNewModal('congrats') : setNewModal();
     } catch (error) {
       if (axios.isAxiosError(error)) {

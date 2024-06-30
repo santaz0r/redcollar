@@ -33,10 +33,12 @@ const EventInfo = ({ setCurrentModal, eventData, onClose }) => {
   };
 
   const handleClose = () => onClose();
-  const handleCloseConfirm = () => {
+  const handleCloseModals = () => {
     setModalActive(false);
     onClose();
   };
+
+  const handleCloseConfirm = (params) => setModalActive(false);
 
   const handleJoin = (eventInfo) => {
     const newInfo = {
@@ -51,7 +53,7 @@ const EventInfo = ({ setCurrentModal, eventData, onClose }) => {
       ...eventInfo,
       participants: eventInfo.participants.filter((i) => i.id !== currentUser.id),
     };
-    dispatch(toggleEvent({ payload: newInfo, setNewModal: handleCloseConfirm, isJoin: false }));
+    dispatch(toggleEvent({ payload: newInfo, setNewModal: handleCloseModals, isJoin: false }));
   };
 
   const handleChangeModal = (data) => setCurrentModal(data);

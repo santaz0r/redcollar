@@ -10,6 +10,7 @@ import { getCurrentuserData, getUsersList } from '../../../store/users';
 import MultiSelect from '../inputs/MultiSelect';
 import FileInput from '../inputs/Fileinput/FileInput';
 import UserView from '../../ui/UserView/UserView';
+import DataPicker from '../../CalendarMini/DataPicker';
 
 const CreateEventForm = ({ onClose }) => {
   const methods = useForm();
@@ -52,9 +53,8 @@ const CreateEventForm = ({ onClose }) => {
                 />
               </div>
               <div className={`${styles.date} ${styles.item}`}>
-                {/* <DatePicker startName="startDate" endName="endDate" /> */}
+                <DataPicker />
               </div>
-              {/* <div className={`${styles.end} ${styles.item}`}>конец</div> */}
               <div className={`${styles.descr} ${styles.item}`}>
                 <TextareaField
                   textarea

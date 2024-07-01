@@ -7,7 +7,7 @@ import MiniHeader from './MiniHeader';
 
 const TOTAL_DAYS = 42;
 
-const CalendarMini = () => {
+const DataPicker = () => {
   const [momentInst, setMomentInst] = useState(moment());
   const startDay = momentInst.clone().startOf('month').startOf('week');
   const handlePrev = () => setMomentInst((prev) => prev.clone().subtract(1, 'month'));
@@ -115,4 +115,4 @@ const CalendarMini = () => {
   );
 };
 
-export default CalendarMini;
+export default DataPicker;

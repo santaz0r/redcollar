@@ -1,0 +1,35 @@
+.header {
+  margin-bottom: 16px;
+  width: 100%;
+  position: relative;
+  &__month_nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__month {
+    text-transform: capitalize;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: 0.12em;
+    text-align: center;
+    color: #14161a;
+  }
+
+  &__btn {
+    background-color: transparent;
+    width: 24px;
+    height: 24px;
+  }
+
+  &__notice {
+    position: absolute;
+    font-size: 12px;
+    font-weight: 200;
+    font-style: italic;
+    top: -31px;
+    left: 0;
+  }
+}

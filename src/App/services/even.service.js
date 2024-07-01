@@ -13,11 +13,10 @@ const eventsService = {
     const membersId = payload.participants.map((i) => i.id);
     const photoId = payload.photos.map((i) => i.id);
     const ownerId = payload.owner.id;
-
     const transformed = {
       ...payload,
       participants: membersId,
-      photos: photoId,
+      ...(photoId && { photoId: photoId }),
       owner: ownerId,
     };
     await httpService.put(`${eventsEndPoint}/${payload.id}`, { data: transformed });

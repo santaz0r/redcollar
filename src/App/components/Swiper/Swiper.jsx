@@ -8,6 +8,8 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 export const GallerySwiper = ({ elements }) => {
+  const items = elements ? elements : [];
+
   return (
     <Swiper
       modules={[Navigation, Pagination]}
@@ -16,7 +18,7 @@ export const GallerySwiper = ({ elements }) => {
       spaceBetween={16}
       slidesPerView={3}
     >
-      {elements.map((i) => (
+      {items.map((i) => (
         <SwiperSlide key={i.id}>
           <div className={styles.swiper__img}>
             <img src={`http://localhost:1337${i.url}`} alt={i.name.replace(i.ext, '')} />

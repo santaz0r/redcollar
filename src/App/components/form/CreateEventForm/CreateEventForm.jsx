@@ -51,8 +51,10 @@ const CreateEventForm = ({ onClose }) => {
                   }}
                 />
               </div>
-              <div className={`${styles.start} ${styles.item}`}>Начало</div>
-              <div className={`${styles.end} ${styles.item}`}>конец</div>
+              <div className={`${styles.date} ${styles.item}`}>
+                {/* <DatePicker startName="startDate" endName="endDate" /> */}
+              </div>
+              {/* <div className={`${styles.end} ${styles.item}`}>конец</div> */}
               <div className={`${styles.descr} ${styles.item}`}>
                 <TextareaField
                   textarea
@@ -72,8 +74,8 @@ const CreateEventForm = ({ onClose }) => {
                 <TextField
                   label="Время проведения"
                   field="time"
-                  placeholder={'Введите место'}
-                  type="password"
+                  placeholder={'Введите время'}
+                  type="time"
                   handleTrim={handleTrim}
                   validationRules={{
                     required: 'Поле обязательно для заполнения',
@@ -85,7 +87,6 @@ const CreateEventForm = ({ onClose }) => {
                   label="Место проведения"
                   field="location"
                   placeholder={'Введите место'}
-                  type="password"
                   handleTrim={handleTrim}
                   validationRules={{
                     required: 'Поле обязательно для заполнения',

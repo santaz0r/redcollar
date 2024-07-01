@@ -4,11 +4,12 @@ import { useState } from 'react';
 import Modal from '../Modal/Modal';
 import CheckEmailForm from '../form/CheckEmailForm';
 import Rclogo from '../../../assets/rclogo.svg';
-import styles from './header.module.scss';
-import common from '../../../styles/_common.module.scss';
 import { getCurrentuserData, getIsLogin } from '../../store/users';
 import UserProfiler from '../UserProfile/UserProfiler';
 import CreateEventForm from '../form/CreateEventForm/CreateEventForm';
+
+import styles from './header.module.scss';
+import common from '../../../styles/_common.module.scss';
 
 const Header = ({ today, handleNext, handlePrev }) => {
   const isLoggin = useSelector(getIsLogin);

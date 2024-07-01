@@ -6,6 +6,7 @@ import Header from '../components/Header/Header';
 
 import { useSelector } from 'react-redux';
 import { getEventsList } from '../store/events';
+import CalendarMini from '../components/CalendarMini/CalendarMini';
 
 const TOTAL_DAYS = 42;
 
@@ -30,6 +31,7 @@ const HomePage = () => {
     <>
       <Header today={momentInst} handlePrev={handlePrev} handleNext={handleNext} />
       <Calendar startDay={startDay} momentInst={momentInst} totalDays={TOTAL_DAYS} events={events} />
+      <CalendarMini />
     </>
   );
 };

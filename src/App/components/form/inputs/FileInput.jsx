@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { filesEndpoint } from '../../../config.json';
@@ -8,6 +8,7 @@ import styles from './file.module.scss';
 
 const FileInput = () => {
   const { register, setValue } = useFormContext();
+  const inputFileRef = useRef(null);
   const [dragActive, setDragActive] = useState(false);
   const [uploaded, setUploaded] = useState([]);
   const [isUploading, setIsUploading] = useState(false);
@@ -44,6 +45,12 @@ const FileInput = () => {
     setDragActive(false);
   };
 
+  const openDialog = () => {
+    if (inputFileRef.current) {
+      inputFileRef.current.click();
+    }
+  };
+
   const setDragOverClass = () => {
     return dragActive ? `${styles.drop} ${styles.drag_over}` : styles.drop;
   };
@@ -63,8 +70,10 @@ const FileInput = () => {
         onDragOver={onDragOver}
         onDragLeave={onDragLeave}
         onDrop={handleDrop}
+        onClick={openDialog}
       >
         {dragActive ? 'Отпускай' : 'Выберите фото или перетащите сюда'}
+        <input className={styles.hidden} ref={inputFileRef} type="file" multiple accept="image/*" />
       </div>
 
       {uploaded && (

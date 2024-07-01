@@ -1,105 +1,110 @@
-import Select from 'react-select';
-import { useFormContext, Controller } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 
 import styles from './multi.module.scss';
-import './multi.scss';
+import { useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { getCurrentuserData } from '../../../store/users';
 
-const UserOptionLabel = ({ name }) => (
-  <div className={styles.user}>
+const UserOptionLabel = ({ name, classes, onClick }) => (
+  <div className={`${styles.user} ${classes}`} onClick={onClick}>
     <div className={styles.photo}></div>
     <span>{name}</span>
   </div>
 );
 
-const MultiSelect = ({ options }) => {
-  const { control } = useFormContext();
-  const optionsArr = options.map((u) => ({
-    label: <UserOptionLabel name={u.username} />,
-    value: u.id,
-  }));
+const ChoosedUser = ({ name, onDelete }) => (
+  <div className={styles.choosed__item}>
+    <div className={styles.photo}></div>
+    <span>{name}</span>
+    <button className={styles.choosed__remove} onClick={onDelete}></button>
+  </div>
+);
 
-  //   const customStyles = {
-  //     control: (base) => ({
-  //       ...base,
-  //       height: '60px',
-  //       borderRadius: '12px',
-  //       border: '1px solid #0d0c0c',
-  //       caretColor: '#23ae00',
-  //       ':hover': {
-  //         border: '1px solid #0d0c0c',
-  //       },
-  //     }),
-  //     option: (base) => ({
-  //       ...base,
-  //     }),
-  //     menu: (base) => ({
-  //       ...base,
-  //       maxWidth: '344px',
-  //       textAlign: 'left',
-  //     }),
-  //     multiValue: (base) => ({
-  //       ...base,
-  //       backgroundColor: '#EFEFEF',
-  //       borderRadius: 12,
-  //       width: 'fit-content',
-  //       paddingRight: 10,
-  //       position: 'relative',
-  //       height: '30px',
-  //     }),
-  //     multiValueLabel: (base) => ({
-  //       ...base,
-  //       color: '#0d0c0c',
-  //     }),
-  //     multiValueRemove: (base) => ({
-  //       ...base,
-  //       opacity: 0,
-  //       position: 'absolute',
-  //       top: 3,
-  //       right: 0,
-  //       cursor: 'pointer',
-  //       height: '20px',
-  //       ':hover': {
-  //         ...base,
-  //         opacity: 1,
-  //         borderRadius: 12,
-  //         zIndex: 100,
-  //         svg: {
-  //           width: '20px',
-  //           height: '30px',
-  //           color: 'black',
-  //         },
-  //         ':hover': {
-  //           backgroundColor: 'gray',
-  //         },
-  //       },
-  //     }),
-  //   };
-  const ClearIndicator = () => null;
-  const DropdownIndicator = () => null;
-  const customFilterOption = (option, rawInput) => {
-    const words = rawInput.split(' ');
-    return words.every((word) => option.data.label.props.name.toLowerCase().includes(word.toLowerCase()));
+const MultiSelect = ({ options }) => {
+  const { setValue } = useFormContext();
+  const currentUser = useSelector(getCurrentuserData);
+  const [isFocused, setIsFocused] = useState(false);
+  const [choosedList, setChoosedList] = useState([]);
+  const listRef = useRef(null);
+  const [search, setSearch] = useState('');
+
+  const hasContent = () => (choosedList.length ? styles.has_content : '');
+
+  const handleClick = (item) => {
+    setChoosedList((prev) => {
+      const newList = [item, ...prev];
+      setValue('participants', [currentUser.id, ...newList.map((i) => i.id)]);
+      return newList;
+    });
   };
+
+  const handleDelete = (id) => {
+    setChoosedList((prev) => {
+      const newList = prev.filter((i) => i.id !== id);
+
+      setValue('participants', [currentUser.id, ...newList.map((i) => i.id)]);
+      return newList;
+    });
+  };
+
+  const handleFocus = () => {
+    setIsFocused(true);
+  };
+
+  const handleBlur = () => {
+    setTimeout(() => {
+      if (!listRef.current.contains(document.activeElement)) {
+        setIsFocused(false);
+      }
+    }, 100);
+  };
+
+  const handleChange = (event) => {
+    const value = event.target.value.toLowerCase();
+    setSearch(value);
+  };
+  const filteredWOowner = options.filter((i) => currentUser.id !== i.id);
+  const filteredArr = filteredWOowner.filter((item) => item.username.toLowerCase().includes(search));
+  const filteredByChoosed = filteredArr.filter((i) => !choosedList.includes(i));
+
   return (
-    <div>
-      <Controller
-        name="select"
-        control={control}
-        render={({ field }) => (
-          <Select
-            {...field}
-            options={optionsArr}
-            isMulti
-            // styles={customStyles}
-            filterOption={customFilterOption}
-            getOptionLabel={(option) => option.label}
-            className={styles.reactSelect}
-            classNamePrefix="react-select"
-            components={{ ClearIndicator, DropdownIndicator }}
-          />
+    <div className={styles.select}>
+      <div className={styles.select__wrapper}>
+        <div className={styles.select__monitor}>
+          <div className={styles.choosed}>
+            {choosedList.length
+              ? choosedList.map((i) => <ChoosedUser key={i.id} name={i.username} onDelete={() => handleDelete(i.id)} />)
+              : null}
+          </div>
+          <label className={styles.label}>
+            <div className={styles.label__title}>Участники</div>
+            <input
+              className={`${styles.search} ${hasContent()}`}
+              type="text"
+              placeholder="Введите имя"
+              onChange={handleChange}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+            />
+          </label>
+        </div>
+        {isFocused && (
+          <div className={styles.border}>
+            <div className={styles.select__options} ref={listRef}>
+              {filteredByChoosed.length
+                ? filteredByChoosed.map((i) => (
+                    <UserOptionLabel
+                      key={i.id}
+                      classes={styles.option}
+                      name={i.username}
+                      onClick={() => handleClick(i)}
+                    />
+                  ))
+                : 'Не найдено'}
+            </div>
+          </div>
         )}
-        //
-      />
+      </div>
     </div>
   );
 };

@@ -1,4 +1,5 @@
 {
   "apiEndpoint": "http://localhost:1337/api",
-  "query": "?pagination%5BpageSize%5D=100&populate=participants%2C%20owner%2C%20photos"
+  "query": "?pagination%5BpageSize%5D=100&populate=participants%2C%20owner%2C%20photos",
+  "filesEndpoint": "http://localhost:1337"
 }

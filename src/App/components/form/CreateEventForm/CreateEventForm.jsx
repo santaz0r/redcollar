@@ -35,7 +35,7 @@ const CreateEventForm = ({ onClose }) => {
         <FormProvider {...methods}>
           <form className={`${styles.create__form} ${styles.form}`} onSubmit={onSubmit}>
             <div className={styles.form__wrapper}>
-              <div className={styles.title}>
+              <div className={`${styles.title} ${styles.item}`}>
                 <TextField
                   label="Название"
                   field="title"
@@ -49,9 +49,9 @@ const CreateEventForm = ({ onClose }) => {
                   }}
                 />
               </div>
-              <div className={styles.start}>Начало</div>
-              <div className={styles.end}>конец</div>
-              <div className={styles.descr}>
+              <div className={`${styles.start} ${styles.item}`}>Начало</div>
+              <div className={`${styles.end} ${styles.item}`}>конец</div>
+              <div className={`${styles.descr} ${styles.item}`}>
                 <TextareaField
                   textarea
                   label="Описание"
@@ -66,7 +66,7 @@ const CreateEventForm = ({ onClose }) => {
                   }}
                 />
               </div>
-              <div className={styles.time}>
+              <div className={`${styles.time} ${styles.item}`}>
                 <TextField
                   label="Время проведения"
                   field="time"
@@ -78,7 +78,7 @@ const CreateEventForm = ({ onClose }) => {
                   }}
                 />
               </div>
-              <div className={styles.location}>
+              <div className={`${styles.location} ${styles.item}`}>
                 <TextField
                   label="Место проведения"
                   field="location"
@@ -90,13 +90,13 @@ const CreateEventForm = ({ onClose }) => {
                   }}
                 />
               </div>
-              <div className={styles.members}>
+              <div className={`${styles.members} ${styles.item}`}>
                 <MultiSelect options={allUsers} />
               </div>
-              <div className={styles.owner}>
+              <div className={`${styles.owner} ${styles.item}`}>
                 <div>мое инфо</div>
               </div>
-              <div className={styles.files}>
+              <div className={`${styles.files} ${styles.item}`}>
                 <FileInput />
               </div>
             </div>

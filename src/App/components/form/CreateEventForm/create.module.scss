@@ -1,10 +1,11 @@
 .create {
   background-color: #fff;
-  padding: 80px 65px 64px;
+  padding: 34px 51px 18px;
   border-radius: 64px;
   position: relative;
   color: #0d0c0c;
-  width: 1075px;
+  width: 935px;
+  height: 828px;
   &__title {
     font-weight: 500;
     font-size: 36px;
@@ -39,6 +40,15 @@
   &__item {
     display: flex;
     flex-direction: column;
+  }
+}
+
+.item {
+  > div {
+    width: 100%;
+    input {
+      width: 100%;
+    }
   }
 }
 

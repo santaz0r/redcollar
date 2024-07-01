@@ -5,7 +5,11 @@ const eventsEndPoint = `/upload`;
 const fileService = {
   uploadFiles: async (payload) => {
     const { data } = await httpService.post(`${eventsEndPoint}`, payload);
-    console.log(data);
+    return data;
+  },
+
+  deleteFile: async (id) => {
+    const { data } = await httpService.delete(`${eventsEndPoint}/files/${id}`);
     return data;
   },
 };

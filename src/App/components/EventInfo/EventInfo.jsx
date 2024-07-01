@@ -12,6 +12,7 @@ import { getCurrentuserData, getIsLogin } from '../../store/users';
 import { useState } from 'react';
 import Modal from '../Modal/Modal';
 import Confirm from '../Confirm/Confirm';
+import UserView from '../ui/UserView/UserView';
 
 const EventInfo = ({ setCurrentModal, eventData, onClose }) => {
   const [isModalActive, setModalActive] = useState(false);
@@ -81,8 +82,11 @@ const EventInfo = ({ setCurrentModal, eventData, onClose }) => {
       <div className={`${styles.event__participants} ${styles.participants}`}>
         <h3>Участники</h3>
         <div className={styles.participants__list}>
-          {ownerFirst.map((p) => (
+          {/* {ownerFirst.map((p) => (
             <div key={p.id}>{p.id === owner.id ? `${p.username} - организатор` : p.username}</div>
+          ))} */}
+          {ownerFirst.map((p) => (
+            <UserView key={p.id} name={p.username} isOwner={p.id === owner.id} />
           ))}
         </div>
       </div>

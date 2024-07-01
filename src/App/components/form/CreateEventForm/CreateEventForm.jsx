@@ -6,9 +6,10 @@ import TextField from '../inputs/TextField';
 import TextareaField from '../inputs/TextareaField';
 import isInRange from '../../../utils/isInRange';
 import { useSelector } from 'react-redux';
-import { getUsersList } from '../../../store/users';
+import { getCurrentuserData, getUsersList } from '../../../store/users';
 import MultiSelect from '../inputs/MultiSelect';
 import FileInput from '../inputs/Fileinput/FileInput';
+import UserView from '../../ui/UserView/UserView';
 
 const CreateEventForm = ({ onClose }) => {
   const methods = useForm();
@@ -19,6 +20,7 @@ const CreateEventForm = ({ onClose }) => {
   } = methods;
 
   const allUsers = useSelector(getUsersList);
+  const currentUser = useSelector(getCurrentuserData);
   const onSubmit = handleSubmit((payload) => {
     console.log(payload);
   });
@@ -94,7 +96,7 @@ const CreateEventForm = ({ onClose }) => {
                 <MultiSelect options={allUsers} />
               </div>
               <div className={`${styles.owner} ${styles.item}`}>
-                <div>мое инфо</div>
+                <UserView name={currentUser.username} isOwner />
               </div>
               <div className={`${styles.files} ${styles.item}`}>
                 <FileInput />

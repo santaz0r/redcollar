@@ -113,7 +113,7 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    div {
+    > div {
       margin-right: 48px;
       &:last-child {
         margin-right: 0;

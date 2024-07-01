@@ -8,7 +8,7 @@ import isInRange from '../../../utils/isInRange';
 import { useSelector } from 'react-redux';
 import { getUsersList } from '../../../store/users';
 import MultiSelect from '../inputs/MultiSelect';
-import FileInput from '../inputs/FileInput';
+import FileInput from '../inputs/Fileinput/FileInput';
 
 const CreateEventForm = ({ onClose }) => {
   const methods = useForm();

@@ -16,6 +16,8 @@ const CalendarGrid = ({
   const daysArr = [...Array(totalDays)].map(() => day.add(1, 'day').clone());
 
   //   const isPassed = (dateStart) => moment().isAfter(dateStart);
+  const dateStart = moment(pickerStart, 'DD.MM.YYYY');
+  const dateEnd = moment(pickerEnd, 'DD.MM.YYYY');
 
   const isCurrentDay = (day) => moment().isSame(day, 'day');
   const isCurrentMonth = (day) => momentInst.isSame(day, 'month');
@@ -38,11 +40,26 @@ const CalendarGrid = ({
 
   const isInRage = (day) => {
     if (!pickerEnd || !pickerStart) return;
-    const dateStart = moment(pickerStart, 'DD.MM.YYYY');
-    const dateEnd = moment(pickerEnd, 'DD.MM.YYYY');
     const dateToCheck = moment(day, 'DD.MM.YYYY');
-
     return dateToCheck.isBetween(dateStart, dateEnd) ? styles.in_range : '';
+  };
+
+  const isBeforeToday = (data) => {
+    return !data.isSame(moment(), 'day') && data.isBefore(moment());
+  };
+
+  const setIsBeforeToday = (data) => {
+    return isBeforeToday(data) ? styles.before__today : '';
+  };
+
+  const isBeforeStart = (data) => {
+    if (!setDateEnd) return;
+    return data.isBefore(dateStart, 'day') ? styles.before__start : '';
+  };
+
+  const isAfterEnd = (data) => {
+    if (setDateEnd) return;
+    return data.isAfter(dateEnd, 'day') ? styles.after__end : '';
   };
 
   const formatDay = (day) => day.format('D');
@@ -69,8 +86,11 @@ const CalendarGrid = ({
             <div className={styles.row}>
               <div className={styles.day}>
                 <button
-                  className={`${styles.day__wrapper} ${isPickerEnd(i)} ${isPickerStart(i)} ${isInRage(i)}`}
+                  className={`${styles.day__wrapper} ${isPickerEnd(i)} ${isPickerStart(i)} ${isInRage(
+                    i
+                  )} ${setIsBeforeToday(i)} ${isBeforeStart(i)} ${isAfterEnd(i)}`}
                   onClick={() => transitionDate(i)}
+                  disabled={isBeforeToday(i)}
                 >
                   {!isCurrentDay(i) ? formatDay(i) : <div className={styles.current_day}>{formatDay(i)}</div>}
                 </button>

@@ -32,9 +32,6 @@
     background-color: #fff;
 
     font-size: 18px;
-    &__header {
-      // min-height: 40px;
-    }
 
     & .row {
       display: flex;
@@ -74,6 +71,12 @@
 
           &.in_range {
             background-color: #efefef;
+          }
+
+          &.before__today,
+          &.before__start,
+          &.after__end {
+            pointer-events: none;
           }
         }
       }
@@ -119,14 +122,6 @@
       content: none;
     }
   }
-
-  // @at-root .pick_start:has(.pick_end) {
-  //   position: relative;
-  //   &::after {
-  //     content: '123';
-  //     background-color: green;
-  //   }
-  // }
 
   &:last-of-type {
     margin-bottom: 32px;

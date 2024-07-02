@@ -3,8 +3,7 @@ import { GallerySwiper } from '../Swiper/Swiper';
 import styles from './event.module.scss';
 import common from '../../../styles/_common.module.scss';
 import moment from 'moment';
-import Notification from '../ui/Notification/Notification';
-import notifications from '../../utils/notificationsList';
+
 import MyButton from '../ui/Button/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleEvent } from '../../store/events';
@@ -13,6 +12,8 @@ import { useState } from 'react';
 import Modal from '../Modal/Modal';
 import Confirm from '../Confirm/Confirm';
 import UserView from '../ui/UserView/UserView';
+import Notification from '../ui/Notification/Notification';
+import notifications from '../../utils/notificationsList';
 
 const EventInfo = ({ setCurrentModal, eventData, onClose }) => {
   const [isModalActive, setModalActive] = useState(false);

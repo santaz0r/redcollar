@@ -6,10 +6,11 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUsersList, login, signUp } from '../../store/users';
 import notifications from '../../utils/notificationsList';
-import Notification from '../ui/Notification/Notification';
+
 import Regexp from './inputs/patterns';
 import isInRange from '../../utils/isInRange';
 import MyButton from '../ui/Button/Button';
+import Notification from '../ui/Notification/Notification.jsx';
 
 const CheckEmailForm = ({ setCurrentModal, setActive, onClose }) => {
   const dispatch = useDispatch();

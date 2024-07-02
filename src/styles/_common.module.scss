@@ -8,6 +8,7 @@
   background-repeat: no-repeat;
   background-position: center;
   cursor: pointer;
+  transition: background-color 0.2s linear;
   &:first-of-type {
     rotate: 180deg;
     margin-right: 8px;
@@ -15,7 +16,8 @@
 
   &:hover {
     background-color: #f51b1b;
-    fill: #fff;
+
+    transition: background-color 0.2s linear;
   }
 
   &:disabled {

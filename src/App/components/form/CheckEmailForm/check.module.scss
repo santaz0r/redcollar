@@ -60,3 +60,12 @@
     }
   }
 }
+
+.login_error {
+  position: relative;
+  span {
+    position: absolute;
+    bottom: 0;
+    color: #f51b1b;
+  }
+}

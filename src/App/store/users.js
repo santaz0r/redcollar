@@ -42,6 +42,13 @@ const usersSlice = createSlice({
     userLoad: (state, action) => {
       state.isLoading = action.payload;
     },
+    userLoggedOut: (state) => {
+      state.isLoggedIn = false;
+      state.user = null;
+    },
+    clearedLoginErr: (state) => {
+      state.userError = '';
+    },
   },
 
   selectors: {
@@ -50,6 +57,7 @@ const usersSlice = createSlice({
     getIsLogin: (state) => state.isLoggedIn,
     getCurrentuserData: (state) => state.user,
     getUserLoadingStatus: (state) => state.isLoading,
+    getLoginError: (state) => state.userError,
   },
 });
 
@@ -62,9 +70,26 @@ const {
   authRequestSuccess,
   authRequestFailed,
   authRequested,
+  userLoggedOut,
   userLoad,
+  clearedLoginErr,
 } = actions;
-export const { getUsersList, getUserLoadingStatus, getUsersLoadingStatus, getCurrentuserData, getIsLogin } = selectors;
+
+export const {
+  getLoginError,
+  getUsersList,
+  getUserLoadingStatus,
+  getUsersLoadingStatus,
+  getCurrentuserData,
+  getIsLogin,
+} = selectors;
+
+export const clearError = () => async (dispatch) => dispatch(clearedLoginErr());
+
+export const logout = () => async (dispatch) => {
+  localStorage.removeItem('token');
+  dispatch(userLoggedOut());
+};
 
 export const login =
   ({ payload, setActive }) =>
@@ -78,8 +103,8 @@ export const login =
       setActive(false);
     } catch (e) {
       if (axios.isAxiosError(e)) {
-        const message = e.response?.data?.message;
-        console.log(e);
+        const message = e.response?.data?.error?.message;
+
         dispatch(authRequestFailed(message));
       }
     }

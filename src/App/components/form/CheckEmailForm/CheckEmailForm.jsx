@@ -2,7 +2,7 @@ import TextField from '../inputs/TextField/TextField';
 import { useForm, FormProvider } from 'react-hook-form';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUsersList, login, signUp } from '../../../store/users';
+import { clearError, getLoginError, getUsersList, login, signUp } from '../../../store/users';
 import notifications from '../../../utils/notificationsList';
 import Regexp from '../inputs/patterns';
 import isInRange from '../../../utils/isInRange';
@@ -11,11 +11,13 @@ import Notification from '../../ui/Notification/Notification';
 
 import styles from './check.module.scss';
 import common from '../../../../styles/_common.module.scss';
+import { removeExtraSpaces } from '../../../utils/removeExtraSpaces';
 
-const CheckEmailForm = ({ setCurrentModal, setActive, onClose }) => {
+const CheckEmailForm = ({ setActive, onClose }) => {
   const dispatch = useDispatch();
   const users = useSelector(getUsersList);
   const [checkStatus, setCheckStatus] = useState('check');
+  const loginError = useSelector(getLoginError);
   const combineCheckLogin = checkStatus === 'login' || checkStatus === 'check';
   const isCheck = checkStatus === 'check';
   const isLogin = checkStatus === 'login';
@@ -31,14 +33,18 @@ const CheckEmailForm = ({ setCurrentModal, setActive, onClose }) => {
     trigger,
   } = methods;
   const passwordWatch = watch('password');
+  const rePasswordWatch = watch('repassword');
+
+  const passwordsMatch = passwordWatch === rePasswordWatch;
 
   const { hasNumber, isLongEnough, hasUpperCase, hasLowerCase, hasSymbol } = Regexp;
 
   const hasError = Object.keys(errors).length;
 
-  const handleTrim = (event) => {
+  const handleTrim = (event, func) => {
     const { name, value } = event.target;
-    setValue(name, value.trim(), { shouldValidate: true });
+    const processedValue = typeof func === 'function' ? func(value) : value.trim();
+    setValue(name, processedValue, { shouldValidate: true });
   };
 
   const onSubmit = handleSubmit((payload) => {
@@ -57,7 +63,10 @@ const CheckEmailForm = ({ setCurrentModal, setActive, onClose }) => {
     return combineCheckLogin ? styles.login : styles.register;
   };
 
-  const handleClose = () => onClose();
+  const handleClose = () => {
+    onClose();
+    dispatch(clearError());
+  };
 
   return (
     <div className={`${styles.check} ${setClasses()}`}>
@@ -72,7 +81,7 @@ const CheckEmailForm = ({ setCurrentModal, setActive, onClose }) => {
                   label="E-mail"
                   field="email"
                   placeholder={'Enter e-mail'}
-                  handleTrim={handleTrim}
+                  onChange={handleTrim}
                   isHide={!isCheck}
                   validationRules={{
                     required: 'Обязательное поле',
@@ -82,19 +91,20 @@ const CheckEmailForm = ({ setCurrentModal, setActive, onClose }) => {
                     },
                   }}
                 />
-
-                <TextField
-                  label="Пароль"
-                  field="password"
-                  placeholder={'Введите пароль'}
-                  type="password"
-                  handleTrim={handleTrim}
-                  isHide={!isLogin}
-                  validationRules={{
-                    required: 'Поле обязательно для заполнения',
-                  }}
-                />
-
+                <div className={styles.login_error}>
+                  <TextField
+                    label="Пароль"
+                    field="password"
+                    placeholder={'Введите пароль'}
+                    type="password"
+                    handleTrim={handleTrim}
+                    isHide={!isLogin}
+                    validationRules={{
+                      required: 'Поле обязательно для заполнения',
+                    }}
+                  />
+                  {isLogin && loginError && <span>Неверный пароль</span>}
+                </div>
                 {isCheck && <MyButton onClick={handleCheck}>Далее</MyButton>}
                 {isLogin && (
                   <MyButton disabledOption={hasError} type={'submit'} onClick={onSubmit}>
@@ -108,14 +118,14 @@ const CheckEmailForm = ({ setCurrentModal, setActive, onClose }) => {
                 <Notification
                   text={notifications.registration}
                   classes={styles.check__notification}
-                  hasError={errors.password || errors.repassword}
+                  hasError={errors.password || errors.repassword || !passwordsMatch}
                 />
                 <div className={styles.form__wrapper}>
                   <TextField
                     label="Ваше имя"
                     field="name"
                     placeholder={'Введите имя'}
-                    handleTrim={handleTrim}
+                    onBlur={(e) => handleTrim(e, removeExtraSpaces)}
                     validationRules={{
                       required: 'Поле обязательно для заполнения',
                       pattern: {
@@ -130,7 +140,7 @@ const CheckEmailForm = ({ setCurrentModal, setActive, onClose }) => {
                     field="password"
                     placeholder={'Введите пароль'}
                     type="password"
-                    handleTrim={handleTrim}
+                    onChange={handleTrim}
                     validationRules={{
                       validate: {
                         isLongEnough: (value) => isInRange(isLongEnough.pattern, value.length) || isLongEnough.message,

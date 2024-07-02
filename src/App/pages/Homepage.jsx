@@ -14,8 +14,13 @@ const HomePage = () => {
     week: { dow: 1 },
   });
   const events = useSelector(getEventsList);
-
-  const [momentInst, setMomentInst] = useState(moment());
+  const sortedByTime = (a, b) => {
+    const dateA = moment(a.dateStart);
+    const dateB = moment(b.dateStart);
+    return dateA.isBefore(dateB) ? -1 : dateA.isAfter(dateB) ? 1 : 0;
+  };
+  const sortedEvents = events.toSorted(sortedByTime);
+  const [momentInst, setMomentInst] = useState(moment.utc());
 
   const startDay = momentInst.clone().startOf('month').startOf('week');
 
@@ -29,7 +34,7 @@ const HomePage = () => {
   return (
     <>
       <Header today={momentInst} handlePrev={handlePrev} handleNext={handleNext} />
-      <Calendar startDay={startDay} momentInst={momentInst} totalDays={TOTAL_DAYS} events={events} />
+      <Calendar startDay={startDay} momentInst={momentInst} totalDays={TOTAL_DAYS} events={sortedEvents} />
     </>
   );
 };

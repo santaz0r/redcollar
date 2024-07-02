@@ -15,6 +15,7 @@
     text-align: center;
     color: #0d0c0c;
     margin-bottom: 40px;
+    text-transform: capitalize;
   }
 
   &__info {
@@ -107,6 +108,13 @@
       cursor: pointer;
       background-color: transparent;
     }
+  }
+
+  &__join {
+    display: block;
+    width: 343px !important;
+    margin: 0 auto !important;
+    background-color: red;
   }
 }
 

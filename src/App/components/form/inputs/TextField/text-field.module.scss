@@ -54,11 +54,10 @@
       }
     }
   }
-  button {
+  &__button {
     position: absolute;
     right: 20px;
     top: -5px;
-
     width: 15px;
     height: 15px;
     mask-image: url('../assets/cross.svg');
@@ -66,6 +65,15 @@
     mask-repeat: no-repeat;
     mask-position: 50% 50%;
     background-color: gray;
+    &.error {
+      background-color: #f51b1b;
+    }
+  }
+
+  &.error {
+    input {
+      border: 1px solid #f51b1b;
+    }
   }
 }
 

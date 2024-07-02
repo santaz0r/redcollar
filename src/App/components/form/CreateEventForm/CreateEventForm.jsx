@@ -17,13 +17,14 @@ import isInRange from '../../../utils/isInRange';
 
 import styles from './create.module.scss';
 import common from '../../../../styles/_common.module.scss';
+import { removeExtraSpaces } from '../../../utils/removeExtraSpaces';
 
 const CreateEventForm = ({ setEvent, onClose, setCurrentModal }) => {
   const methods = useForm();
   const {
     handleSubmit,
     setValue,
-    formState: { errors, isValid },
+    formState: { isValid },
   } = methods;
   const [isModalActive, setModalActive] = useState(false);
   const allUsers = useSelector(getUsersList);
@@ -52,7 +53,7 @@ const CreateEventForm = ({ setEvent, onClose, setCurrentModal }) => {
 
   const handleTrim = (event) => {
     const { name, value } = event.target;
-    setValue(name, value.trim(), { shouldValidate: true });
+    setValue(name, removeExtraSpaces(value), { shouldValidate: true });
   };
 
   const handleCloseModals = () => {
@@ -80,7 +81,7 @@ const CreateEventForm = ({ setEvent, onClose, setCurrentModal }) => {
                   label="Название"
                   field="title"
                   placeholder={'Введите название'}
-                  handleTrim={handleTrim}
+                  onBlur={handleTrim}
                   validationRules={{
                     required: 'Поле обязательно для заполнения',
                     validate: {
@@ -98,7 +99,7 @@ const CreateEventForm = ({ setEvent, onClose, setCurrentModal }) => {
                   label="Описание"
                   field="description"
                   placeholder={''}
-                  handleTrim={handleTrim}
+                  onBlur={handleTrim}
                   validationRules={{
                     required: 'Поле обязательно для заполнения',
                     validate: {
@@ -124,9 +125,12 @@ const CreateEventForm = ({ setEvent, onClose, setCurrentModal }) => {
                   label="Место проведения"
                   field="location"
                   placeholder={'Введите место'}
-                  handleTrim={handleTrim}
+                  onBlur={handleTrim}
                   validationRules={{
                     required: 'Поле обязательно для заполнения',
+                    validate: {
+                      isLongEnough: (value) => isInRange([0, 50], value.length) || 'Слишком длинное',
+                    },
                   }}
                 />
               </div>
@@ -137,12 +141,7 @@ const CreateEventForm = ({ setEvent, onClose, setCurrentModal }) => {
                 <UserView name={currentUser.username} isOwner />
               </div>
               <div className={`${styles.files} ${styles.item}`}>
-                <FileInput
-                  errors={errors}
-                  validationRules={{
-                    required: 'Поле обязательно для заполнения',
-                  }}
-                />
+                <FileInput />
               </div>
             </div>
             <MyButton

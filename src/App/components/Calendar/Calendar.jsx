@@ -26,9 +26,6 @@ const Calendar = ({ startDay, momentInst, totalDays, events }) => {
   };
 
   const handleModalClose = () => setModalActive(false);
-
-  // const convertToUnix = (day) => day.format('X');
-  // console.log('2024-06-30T10:00:00.000Z'.format('X'));
   const isPassed = (dateStart) => moment().isAfter(dateStart);
 
   const isCurrentDay = (day) => moment().isSame(day, 'day');

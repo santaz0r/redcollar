@@ -7,7 +7,7 @@ const Regexp = {
   password: {},
 
   name: {
-    pattern: /^\S{3,}$/g,
+    pattern: /^.{3,}$/g,
     message: 'Минимум 3 символа',
   },
 

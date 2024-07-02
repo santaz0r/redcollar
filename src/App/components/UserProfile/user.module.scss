@@ -2,6 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
   &__photo {
     min-width: 80px;
     min-height: 80px;
@@ -17,5 +18,22 @@
     background-repeat: no-repeat;
     background-position: center;
     margin-right: 30px;
+  }
+
+  &__logout {
+    position: absolute;
+    right: -13px;
+    bottom: -7px;
+    background-color: #0d0c0c;
+    padding: 2px 6px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 12px;
+    transition: background-color 0.2s linear;
+    &:hover {
+      background-color: #f51b1b;
+      transition: background-color 0.2s linear;
+    }
   }
 }

@@ -11,6 +11,7 @@ import CreateEventForm from '../form/CreateEventForm/CreateEventForm';
 import styles from './header.module.scss';
 import common from '../../../styles/_common.module.scss';
 import Congrats from '../Congrats/Congrats';
+import moment from 'moment';
 
 const Header = ({ today, handleNext, handlePrev }) => {
   const isLoggin = useSelector(getIsLogin);
@@ -19,7 +20,7 @@ const Header = ({ today, handleNext, handlePrev }) => {
 
   const [createdEvent, setCreatedEvent] = useState(null);
 
-  const month = today.format('MMMM');
+  const month = moment().isSame(today, 'year') ? today.format('MMMM') : today.format('MMMM YYYY');
   const handleClick = () => {
     setIsModalActive(true);
     setCurrentModal('login');

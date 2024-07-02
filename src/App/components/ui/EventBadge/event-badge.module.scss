@@ -8,6 +8,16 @@
   max-width: 95%;
   color: #0d0c0c;
   border-radius: 8px;
+  margin-bottom: 4px;
+  transition: transform 0.2s linear;
+  &:last-child {
+    margin-bottom: 0;
+  }
+  &:hover {
+    transform: translateX(-5px);
+
+    transition: transform 0.1s linear;
+  }
   &__passed {
     opacity: 0.5;
     color: gray;

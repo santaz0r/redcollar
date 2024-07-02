@@ -79,6 +79,7 @@ export const login =
     } catch (e) {
       if (axios.isAxiosError(e)) {
         const message = e.response?.data?.message;
+        console.log(e);
         dispatch(authRequestFailed(message));
       }
     }

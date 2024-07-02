@@ -12,6 +12,15 @@
     rotate: 180deg;
     margin-right: 8px;
   }
+
+  &:hover {
+    background-color: #f51b1b;
+    fill: #fff;
+  }
+
+  &:disabled {
+    pointer-events: none;
+  }
 }
 
 .swiper__btn {

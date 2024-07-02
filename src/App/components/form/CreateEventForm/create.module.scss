@@ -5,7 +5,7 @@
   position: relative;
   color: #0d0c0c;
   width: 935px;
-  height: 828px;
+
   text-align: center;
   &__title {
     font-weight: 600;
@@ -23,7 +23,7 @@
 .form {
   &__wrapper {
     display: grid;
-    margin-bottom: 64px;
+    margin-bottom: 48px;
 
     grid-template-columns: repeat(5, 1fr);
     grid-template-rows: repeat(6, 1fr);

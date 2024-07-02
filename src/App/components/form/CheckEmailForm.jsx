@@ -1,16 +1,16 @@
-import styles from './check.module.scss';
-import common from '../../../styles/_common.module.scss';
 import TextField from './inputs/TextField';
 import { useForm, FormProvider } from 'react-hook-form';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUsersList, login, signUp } from '../../store/users';
 import notifications from '../../utils/notificationsList';
-
 import Regexp from './inputs/patterns';
 import isInRange from '../../utils/isInRange';
 import MyButton from '../ui/Button/Button';
-import Notification from '../ui/Notification/Notification.jsx';
+import Notification from '../ui/Notification/Notification';
+
+import styles from './check.module.scss';
+import common from '../../../styles/_common.module.scss';
 
 const CheckEmailForm = ({ setCurrentModal, setActive, onClose }) => {
   const dispatch = useDispatch();

@@ -3,17 +3,20 @@ import common from '../../../styles/_common.module.scss';
 import MyButton from '../ui/Button/Button';
 import moment from 'moment';
 
-const Congrats = ({ eventData, onClose }) => {
+const Congrats = ({ eventData, onClose, modalText, isUnicorn = false }) => {
   const { title, location, dateStart } = eventData;
   const day = moment.utc(dateStart).format('dddd');
   const date = moment.utc(dateStart).format('D MMMM');
   const time = moment.utc(dateStart).format('HH:mm');
   console.log(eventData);
+
+  const setClass = () => (isUnicorn ? styles.unicorn : styles.hand);
+
   const handleClose = () => onClose();
   return (
-    <div className={styles.congrats}>
+    <div className={`${styles.congrats} ${setClass()}`}>
       <div className={styles.congrats__wrapper}>
-        <div className={styles.congrats__title}>Поздравляем!</div>
+        <div className={styles.congrats__title}>{modalText}</div>
         <div className={styles.congrats__subtitle}>
           Вы теперь участник события: <span>{title}</span>
         </div>

@@ -8,9 +8,17 @@
   color: #0d0c0c;
   font-weight: 500;
 
-  background-image: url('./hand.png');
-  background-repeat: no-repeat;
-  background-position: 93% 0;
+  &.unicorn {
+    background-image: url('./unicorn_02.png');
+    background-repeat: no-repeat;
+    background-position: 100% 0;
+  }
+
+  &.hand {
+    background-image: url('./hand.png');
+    background-repeat: no-repeat;
+    background-position: 93% 0;
+  }
 
   &__title {
     font-weight: 600;

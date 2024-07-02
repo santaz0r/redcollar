@@ -63,7 +63,9 @@ const Header = ({ today, handleNext, handlePrev }) => {
           {currentModal === 'create' && (
             <CreateEventForm setCurrentModal={setCurrentModal} onClose={handleModalClose} setEvent={setCreatedEvent} />
           )}
-          {currentModal === 'congrats' && <Congrats eventData={createdEvent} onClose={handleModalClose} />}
+          {currentModal === 'congrats' && (
+            <Congrats eventData={createdEvent} onClose={handleModalClose} modalText={'Ура!'} isUnicorn />
+          )}
         </Modal>
       )}
     </header>

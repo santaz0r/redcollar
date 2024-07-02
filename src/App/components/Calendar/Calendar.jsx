@@ -40,12 +40,14 @@ const Calendar = ({ startDay, momentInst, totalDays, events }) => {
   return (
     <>
       {isModalActive && (
-        <Modal setActive={setModalActive}>
+        <Modal>
           {currentModal === 'event' && (
             <EventInfo setCurrentModal={setCurrentModal} eventData={eventInfo} onClose={handleModalClose} />
           )}
           {currentModal === 'login' && <CheckEmailForm onClose={handleModalClose} setActive={setModalActive} />}
-          {currentModal === 'congrats' && <Congrats eventData={eventInfo} onClose={handleModalClose} />}
+          {currentModal === 'congrats' && (
+            <Congrats eventData={eventInfo} onClose={handleModalClose} modalText={'Поздравляем!'} />
+          )}
         </Modal>
       )}
       <div className={`${styles.calendar} ${styles.calendar__header}`}>

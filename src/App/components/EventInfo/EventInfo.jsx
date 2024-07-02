@@ -68,7 +68,11 @@ const EventInfo = ({ setCurrentModal, eventData, onClose }) => {
     <div className={setPassed()}>
       {isModalActive && (
         <Modal setActive={setModalActive}>
-          <Confirm onLeave={() => handleLeave(eventData)} onClose={handleCloseConfirm} />
+          <Confirm
+            title={'Вы действительно хотите отменить участие?'}
+            onLeave={() => handleLeave(eventData)}
+            onClose={handleCloseConfirm}
+          />
         </Modal>
       )}
       <h2 className={styles.event__title}>{title}</h2>

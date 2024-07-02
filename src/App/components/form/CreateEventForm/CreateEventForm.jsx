@@ -1,5 +1,4 @@
-import styles from './create.module.scss';
-import common from '../../../../styles/_common.module.scss';
+import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import MyButton from '../../ui/Button/Button';
 import TextField from '../inputs/TextField';
@@ -13,6 +12,11 @@ import UserView from '../../ui/UserView/UserView';
 import DataPicker from '../../CalendarMini/DataPicker';
 import { transformToTimeISO } from '../../../utils/transformToTimeISO';
 import { createEvent, getTriggerLoading } from '../../../store/events';
+import Confirm from '../../Confirm/Confirm';
+import Modal from '../../Modal/Modal';
+
+import styles from './create.module.scss';
+import common from '../../../../styles/_common.module.scss';
 
 const CreateEventForm = ({ setEvent, onClose, setCurrentModal }) => {
   const methods = useForm();
@@ -21,7 +25,7 @@ const CreateEventForm = ({ setEvent, onClose, setCurrentModal }) => {
     setValue,
     formState: { errors },
   } = methods;
-
+  const [isModalActive, setModalActive] = useState(false);
   const allUsers = useSelector(getUsersList);
   const currentUser = useSelector(getCurrentuserData);
   const triggerLoading = useSelector(getTriggerLoading);
@@ -50,9 +54,22 @@ const CreateEventForm = ({ setEvent, onClose, setCurrentModal }) => {
     const { name, value } = event.target;
     setValue(name, value.trim(), { shouldValidate: true });
   };
-  const handleClose = () => onClose();
+
+  const handleCloseModals = () => {
+    setModalActive(false);
+    onClose();
+  };
   return (
     <div className={styles.create}>
+      {isModalActive && (
+        <Modal>
+          <Confirm
+            title={'Передумали создавать событие?'}
+            onLeave={handleCloseModals}
+            onClose={() => setModalActive(false)}
+          />
+        </Modal>
+      )}
       <div className={styles.create__wrapper}>
         <div className={styles.create__title}>Создание события</div>
         <FormProvider {...methods}>
@@ -134,7 +151,11 @@ const CreateEventForm = ({ setEvent, onClose, setCurrentModal }) => {
           </form>
         </FormProvider>
       </div>
-      <button className={common.modal__btn_close} disabled={triggerLoading} onClick={handleClose}></button>
+      <button
+        className={common.modal__btn_close}
+        disabled={triggerLoading}
+        onClick={() => setModalActive(true)}
+      ></button>
     </div>
   );
 };

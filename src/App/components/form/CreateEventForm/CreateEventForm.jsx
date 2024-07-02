@@ -5,14 +5,16 @@ import MyButton from '../../ui/Button/Button';
 import TextField from '../inputs/TextField';
 import TextareaField from '../inputs/TextareaField';
 import isInRange from '../../../utils/isInRange';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getCurrentuserData, getUsersList } from '../../../store/users';
 import MultiSelect from '../inputs/MultiSelect';
 import FileInput from '../inputs/Fileinput/FileInput';
 import UserView from '../../ui/UserView/UserView';
 import DataPicker from '../../CalendarMini/DataPicker';
+import { transformToTimeISO } from '../../../utils/transformToTimeISO';
+import { createEvent, getTriggerLoading } from '../../../store/events';
 
-const CreateEventForm = ({ onClose }) => {
+const CreateEventForm = ({ setEvent, onClose, setCurrentModal }) => {
   const methods = useForm();
   const {
     handleSubmit,
@@ -22,8 +24,26 @@ const CreateEventForm = ({ onClose }) => {
 
   const allUsers = useSelector(getUsersList);
   const currentUser = useSelector(getCurrentuserData);
+  const triggerLoading = useSelector(getTriggerLoading);
+  const dispatch = useDispatch();
+
   const onSubmit = handleSubmit((payload) => {
-    console.log(payload);
+    const { dateStart, dateEnd, time, participants, photos, ...rest } = payload;
+    const dateTimeISOStart = transformToTimeISO(dateStart, time);
+    const dateTimeISOEnd = dateEnd ? transformToTimeISO(dateEnd, time) : transformToTimeISO(dateStart, time);
+    const transformMembers = participants ? participants : [currentUser.id];
+    const photosArr = photos ? photos : [];
+
+    const newData = {
+      ...rest,
+      dateStart: dateTimeISOStart,
+      dateEnd: dateTimeISOEnd,
+      participants: transformMembers,
+      owner: currentUser.id,
+      photos: photosArr,
+    };
+    setEvent(newData);
+    dispatch(createEvent({ payload: newData, setNewModal: setCurrentModal }));
   });
 
   const handleTrim = (event) => {
@@ -53,7 +73,7 @@ const CreateEventForm = ({ onClose }) => {
                 />
               </div>
               <div className={`${styles.date} ${styles.item}`}>
-                <DataPicker />
+                <DataPicker validationRules={{ required: 'Выберите "начало"' }} />
               </div>
               <div className={`${styles.descr} ${styles.item}`}>
                 <TextareaField
@@ -100,16 +120,21 @@ const CreateEventForm = ({ onClose }) => {
                 <UserView name={currentUser.username} isOwner />
               </div>
               <div className={`${styles.files} ${styles.item}`}>
-                <FileInput />
+                <FileInput
+                  errors={errors}
+                  validationRules={{
+                    required: 'Поле обязательно для заполнения',
+                  }}
+                />
               </div>
             </div>
-            <MyButton type="submit" onClick={onSubmit}>
-              Создать
+            <MyButton type="submit" onClick={onSubmit} disabledOption={triggerLoading}>
+              {triggerLoading ? 'Ожидайте' : 'Создать'}
             </MyButton>
           </form>
         </FormProvider>
       </div>
-      <button className={common.modal__btn_close} onClick={handleClose}></button>
+      <button className={common.modal__btn_close} disabled={triggerLoading} onClick={handleClose}></button>
     </div>
   );
 };

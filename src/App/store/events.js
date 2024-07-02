@@ -5,10 +5,11 @@ import eventsService from '../services/even.service';
 const initialState = {
   entities: [],
   isLoading: true,
-  createError: '',
   dataError: '',
 
   joinError: '',
+  createError: '',
+  triggerLoading: false,
 };
 
 const eventsSlice = createSlice({
@@ -38,19 +39,59 @@ const eventsSlice = createSlice({
     eventJoinFailed: (state, action) => {
       state.joinError = action.payload;
     },
+
+    eventCreateRequest: (state) => {
+      state.createError = '';
+      state.triggerLoading = true;
+    },
+
+    eventCreated: (state, action) => {
+      state.entities = action.payload;
+      state.triggerLoading = false;
+    },
+
+    eventCreateFailed: (state, action) => {
+      state.createError = action.payload;
+      state.triggerLoading = false;
+    },
   },
   selectors: {
     getEventsLoadingStatus: (state) => state.isLoading,
     getEventsList: (state) => state.entities,
+    getTriggerLoading: (state) => state.triggerLoading,
   },
 });
 
 const { actions, reducer: eventsReducer, selectors } = eventsSlice;
 
-const { eventsReceived, eventsRequestFailed, eventsRequested, eventToggleJoin, eventJoinFailed, eventJoinRequest } =
-  actions;
+const {
+  eventsReceived,
+  eventsRequestFailed,
+  eventsRequested,
+  eventToggleJoin,
+  eventJoinFailed,
+  eventJoinRequest,
+  eventCreateFailed,
+  eventCreateRequest,
+  eventCreated,
+} = actions;
 
-export const { getEventsList, getEventsLoadingStatus } = selectors;
+export const { getEventsList, getEventsLoadingStatus, getTriggerLoading } = selectors;
+
+export const createEvent =
+  ({ payload, setNewModal }) =>
+  async (dispatch) => {
+    dispatch(eventCreateRequest());
+    try {
+      const data = await eventsService.createEvent(payload);
+      dispatch(eventCreated(data.data));
+      setNewModal('congrats');
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        dispatch(eventCreateFailed(error.message));
+      }
+    }
+  };
 
 export const toggleEvent =
   ({ payload, setNewModal, isJoin = true }) =>

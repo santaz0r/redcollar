@@ -16,10 +16,17 @@ const eventsService = {
     const transformed = {
       ...payload,
       participants: membersId,
-      ...(photoId && { photoId: photoId }),
+      photos: photoId,
       owner: ownerId,
     };
     await httpService.put(`${eventsEndPoint}/${payload.id}`, { data: transformed });
+    const { data } = await httpService.get(`${eventsEndPoint}${query}`);
+
+    return data;
+  },
+
+  createEvent: async (payload) => {
+    await httpService.post(`${eventsEndPoint}`, { data: payload });
     const { data } = await httpService.get(`${eventsEndPoint}${query}`);
 
     return data;

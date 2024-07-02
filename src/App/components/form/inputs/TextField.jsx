@@ -31,7 +31,13 @@ const TextField = ({ label, field, type = 'text', placeholder, handleTrim, isHid
         />
         {type === 'text' && <button onClick={clearInput}></button>}
       </label>
-      {<div className={styles.error}>{errors[field]?.message?.toString()}</div>}
+      {
+        <div className={styles.error}>
+          <div className={errors[field] ? `${styles.error__message} ${styles.active}` : styles.error__message}>
+            {errors[field]?.message?.toString()}
+          </div>
+        </div>
+      }
       {type === 'password' && (
         <label className={styles.pass__label}>
           <input type="checkbox" onChange={toggleShowPassword} checked={showPassword} />

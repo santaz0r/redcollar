@@ -42,17 +42,21 @@ const EventInfo = ({ setCurrentModal, eventData, onClose }) => {
   const handleCloseConfirm = () => setModalActive(false);
 
   const handleJoin = (eventInfo) => {
+    const photosArr = eventInfo.photos ? eventInfo.photos : [];
     const newInfo = {
       ...eventInfo,
       participants: eventInfo.participants.concat(currentUser),
+      photos: photosArr,
     };
     dispatch(toggleEvent({ payload: newInfo, setNewModal: setCurrentModal }));
   };
 
   const handleLeave = (eventInfo) => {
+    const photosArr = eventInfo.photos ? eventInfo.photos : [];
     const newInfo = {
       ...eventInfo,
       participants: eventInfo.participants.filter((i) => i.id !== currentUser.id),
+      photos: photosArr,
     };
     dispatch(toggleEvent({ payload: newInfo, setNewModal: handleCloseModals, isJoin: false }));
   };
@@ -82,9 +86,6 @@ const EventInfo = ({ setCurrentModal, eventData, onClose }) => {
       <div className={`${styles.event__participants} ${styles.participants}`}>
         <h3>Участники</h3>
         <div className={styles.participants__list}>
-          {/* {ownerFirst.map((p) => (
-            <div key={p.id}>{p.id === owner.id ? `${p.username} - организатор` : p.username}</div>
-          ))} */}
           {ownerFirst.map((p) => (
             <UserView key={p.id} name={p.username} isOwner={p.id === owner.id} />
           ))}

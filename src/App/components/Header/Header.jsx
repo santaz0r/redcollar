@@ -10,12 +10,15 @@ import CreateEventForm from '../form/CreateEventForm/CreateEventForm';
 
 import styles from './header.module.scss';
 import common from '../../../styles/_common.module.scss';
+import Congrats from '../Congrats/Congrats';
 
 const Header = ({ today, handleNext, handlePrev }) => {
   const isLoggin = useSelector(getIsLogin);
   const currentUser = useSelector(getCurrentuserData);
   const [isModalActive, setIsModalActive] = useState(false);
   const [currentModal, setCurrentModal] = useState('');
+
+  const [createdEvent, setCreatedEvent] = useState(null);
 
   const month = today.format('MMMM');
   const handleClick = () => {
@@ -57,7 +60,10 @@ const Header = ({ today, handleNext, handlePrev }) => {
       {isModalActive && (
         <Modal setActive={setIsModalActive}>
           {currentModal === 'login' && <CheckEmailForm onClose={handleModalClose} setActive={setIsModalActive} />}
-          {currentModal === 'create' && <CreateEventForm />}
+          {currentModal === 'create' && (
+            <CreateEventForm setCurrentModal={setCurrentModal} onClose={handleModalClose} setEvent={setCreatedEvent} />
+          )}
+          {currentModal === 'congrats' && <Congrats eventData={createdEvent} onClose={handleModalClose} />}
         </Modal>
       )}
     </header>

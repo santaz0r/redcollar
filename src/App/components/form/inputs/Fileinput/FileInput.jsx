@@ -27,7 +27,7 @@ const FileInput = () => {
       const res = await fileService.uploadFiles(formData);
       setUploaded((prev) => {
         const newArr = [...prev, ...res];
-        setValue('files', newArr);
+        setValue('photos', newArr);
         return newArr;
       });
     } catch (error) {
@@ -71,7 +71,7 @@ const FileInput = () => {
   const handleDelete = async (id) => {
     setUploaded((prev) => {
       const newArr = prev.filter((item) => item.id !== id);
-      setValue('files', newArr);
+      setValue('photos', newArr);
       return newArr;
     });
   };

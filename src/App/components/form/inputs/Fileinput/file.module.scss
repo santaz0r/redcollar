@@ -11,7 +11,7 @@
 
 .files {
   display: grid;
-
+  position: relative;
   grid-template-columns: repeat(5, 1fr);
   grid-template-rows: repeat(2, 1fr);
   grid-gap: 10px;
@@ -58,7 +58,7 @@
   }
   &__images {
     width: 133px;
-    height: 80px;
+    height: 75px;
     position: relative;
     &:hover {
       .uploaded {
@@ -93,4 +93,10 @@
   background-color: rgba(245, 27, 27, 0.6);
   border: 1px dotted #f51b1b;
   color: #0d0c0c;
+}
+
+.error {
+  position: absolute;
+  bottom: 5px;
+  left: 16px;
 }

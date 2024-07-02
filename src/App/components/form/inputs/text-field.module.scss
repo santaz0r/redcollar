@@ -115,6 +115,13 @@
   & .error {
     text-align: left;
     color: #f51b1b;
+    &__message {
+      visibility: hidden;
+      min-height: 19px;
+    }
+    &__message.active {
+      visibility: visible;
+    }
   }
 }
 .hide {

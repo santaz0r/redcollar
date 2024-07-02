@@ -4,10 +4,16 @@ import CalendarGrid from './CalendarGrid';
 
 import styles from './calendar-mini.module.scss';
 import MiniHeader from './MiniHeader';
+import { useFormContext } from 'react-hook-form';
 
 const TOTAL_DAYS = 42;
 
-const DataPicker = () => {
+const DataPicker = ({ validationRules }) => {
+  const {
+    register,
+    setValue,
+    formState: { errors },
+  } = useFormContext();
   const [momentInst, setMomentInst] = useState(moment());
   const startDay = momentInst.clone().startOf('month').startOf('week');
   const handlePrev = () => setMomentInst((prev) => prev.clone().subtract(1, 'month'));
@@ -44,6 +50,9 @@ const DataPicker = () => {
   };
 
   const handleSubmit = () => {
+    setValue('dateStart', startDate, { shouldValidate: true });
+    setValue('dateEnd', endDate);
+
     setIsActive(false);
     setIsStart(false);
     setIsEnd(false);
@@ -63,6 +72,7 @@ const DataPicker = () => {
             placeholder=""
             defaultValue={startDate}
             onClick={handleOpenStart}
+            {...register('dateStart', validationRules)}
             readOnly
           />
         </div>
@@ -78,7 +88,7 @@ const DataPicker = () => {
           />
         </div>
       </div>
-
+      {<div className={styles.error}>{errors['dateStart']?.message?.toString()}</div>}
       {isActive && (
         <>
           {isStart && (

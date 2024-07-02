@@ -1,19 +1,19 @@
 import { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import MyButton from '../../ui/Button/Button';
-import TextField from '../inputs/TextField';
-import TextareaField from '../inputs/TextareaField';
-import isInRange from '../../../utils/isInRange';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCurrentuserData, getUsersList } from '../../../store/users';
-import MultiSelect from '../inputs/MultiSelect';
+import { createEvent, getTriggerLoading } from '../../../store/events';
+import MyButton from '../../ui/Button/Button';
+import TextField from '../inputs/TextField/TextField';
+import TextareaField from '../inputs/TextAreaField/TextareaField';
+import MultiSelect from '../inputs/MultiSelect/MultiSelect';
 import FileInput from '../inputs/Fileinput/FileInput';
 import UserView from '../../ui/UserView/UserView';
-import DataPicker from '../../CalendarMini/DataPicker';
-import { transformToTimeISO } from '../../../utils/transformToTimeISO';
-import { createEvent, getTriggerLoading } from '../../../store/events';
+import DataPicker from '../../DatePicker/DataPicker';
 import Confirm from '../../Confirm/Confirm';
 import Modal from '../../Modal/Modal';
+import { transformToTimeISO } from '../../../utils/transformToTimeISO';
+import isInRange from '../../../utils/isInRange';
 
 import styles from './create.module.scss';
 import common from '../../../../styles/_common.module.scss';
@@ -23,7 +23,7 @@ const CreateEventForm = ({ setEvent, onClose, setCurrentModal }) => {
   const {
     handleSubmit,
     setValue,
-    formState: { errors },
+    formState: { errors, isValid },
   } = methods;
   const [isModalActive, setModalActive] = useState(false);
   const allUsers = useSelector(getUsersList);
@@ -145,7 +145,12 @@ const CreateEventForm = ({ setEvent, onClose, setCurrentModal }) => {
                 />
               </div>
             </div>
-            <MyButton type="submit" onClick={onSubmit} disabledOption={triggerLoading}>
+            <MyButton
+              classes={styles.create__btn}
+              type="submit"
+              onClick={onSubmit}
+              disabledOption={triggerLoading || !isValid}
+            >
               {triggerLoading ? 'Ожидайте' : 'Создать'}
             </MyButton>
           </form>

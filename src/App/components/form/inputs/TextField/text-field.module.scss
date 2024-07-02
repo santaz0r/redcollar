@@ -61,7 +61,8 @@
 
     width: 15px;
     height: 15px;
-    mask-image: url('../../../../assets/cross.svg');
+    mask-image: url('../assets/cross.svg');
+    cursor: pointer;
     mask-repeat: no-repeat;
     mask-position: 50% 50%;
     background-color: gray;
@@ -86,9 +87,9 @@
     &:checked {
       &::after {
         content: '';
-        background-image: url('./openEye.svg');
+        background-image: url('../assets/openEye.svg');
         background-repeat: no-repeat;
-        background-position: 50% 50%;
+        top: -10px;
         width: 100%;
         height: 100%;
         position: absolute;
@@ -97,9 +98,10 @@
     &:not(:checked) {
       &::after {
         content: '';
-        background-image: url('./closedEye.svg');
+        background-image: url('../assets/closedEye.svg');
         background-repeat: no-repeat;
         background-position: 50% 50%;
+        top: -10px;
         width: 100%;
         height: 100%;
         position: absolute;
@@ -117,9 +119,11 @@
     color: #f51b1b;
     &__message {
       visibility: hidden;
+
       min-height: 19px;
     }
     &__message.active {
+      text-wrap: nowrap;
       visibility: visible;
     }
   }

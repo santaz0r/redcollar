@@ -39,13 +39,11 @@ const DataPicker = ({ validationRules }) => {
 
   const setDateStart = (data) => {
     const date = data.format('DD.MM.YYYY');
-    console.log(date);
     setStartDate(date);
   };
 
   const setDateEnd = (data) => {
     const date = data.format('DD.MM.YYYY');
-    console.log(date);
     setEndDate(date);
   };
 
@@ -64,7 +62,7 @@ const DataPicker = ({ validationRules }) => {
     <div className={styles.date_picker}>
       <div className={styles.date_picker__inputs}>
         <div className={styles.date_picker__input}>
-          <div className={styles.date_picker__label}> Начало</div>
+          <div className={styles.date_picker__label}>Начало</div>
 
           <input
             className={isStart ? styles.active : undefined}

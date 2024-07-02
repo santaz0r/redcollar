@@ -3,7 +3,7 @@ import { useFormContext } from 'react-hook-form';
 import styles from './multi.module.scss';
 import { useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { getCurrentuserData } from '../../../store/users';
+import { getCurrentuserData } from '../../../../store/users';
 
 const UserOptionLabel = ({ name, classes, onClick }) => (
   <div className={`${styles.user} ${classes}`} onClick={onClick}>

@@ -3,12 +3,12 @@ import common from '../../../styles/_common.module.scss';
 import MyButton from '../ui/Button/Button';
 import moment from 'moment';
 
-const Congrats = ({ eventData, onClose, modalText, isUnicorn = false }) => {
+const Congrats = ({ eventData, onClose, modalText, isCreated = false, isUnicorn = false }) => {
   const { title, location, dateStart } = eventData;
   const day = moment.utc(dateStart).format('dddd');
   const date = moment.utc(dateStart).format('D MMMM');
   const time = moment.utc(dateStart).format('HH:mm');
-  console.log(eventData);
+  const text = isCreated ? 'Вы добавили новое событие:' : 'Вы теперь участник события:';
 
   const setClass = () => (isUnicorn ? styles.unicorn : styles.hand);
 
@@ -18,7 +18,7 @@ const Congrats = ({ eventData, onClose, modalText, isUnicorn = false }) => {
       <div className={styles.congrats__wrapper}>
         <div className={styles.congrats__title}>{modalText}</div>
         <div className={styles.congrats__subtitle}>
-          Вы теперь участник события: <span>{title}</span>
+          {text} <span>{title}</span>
         </div>
         <div className={styles.congrats__info}>
           <div className={styles.congrats__date}>

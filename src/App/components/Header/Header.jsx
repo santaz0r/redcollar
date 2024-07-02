@@ -2,9 +2,9 @@ import { useSelector } from 'react-redux';
 import { useState } from 'react';
 
 import Modal from '../Modal/Modal';
-import CheckEmailForm from '../form/CheckEmailForm';
+import CheckEmailForm from '../form/CheckEmailForm/CheckEmailForm';
 import Rclogo from '../../../assets/rclogo.svg';
-import { getCurrentuserData, getIsLogin } from '../../store/users';
+import { getIsLogin } from '../../store/users';
 import UserProfiler from '../UserProfile/UserProfiler';
 import CreateEventForm from '../form/CreateEventForm/CreateEventForm';
 
@@ -14,7 +14,6 @@ import Congrats from '../Congrats/Congrats';
 
 const Header = ({ today, handleNext, handlePrev }) => {
   const isLoggin = useSelector(getIsLogin);
-  const currentUser = useSelector(getCurrentuserData);
   const [isModalActive, setIsModalActive] = useState(false);
   const [currentModal, setCurrentModal] = useState('');
 
@@ -64,7 +63,7 @@ const Header = ({ today, handleNext, handlePrev }) => {
             <CreateEventForm setCurrentModal={setCurrentModal} onClose={handleModalClose} setEvent={setCreatedEvent} />
           )}
           {currentModal === 'congrats' && (
-            <Congrats eventData={createdEvent} onClose={handleModalClose} modalText={'Ура!'} isUnicorn />
+            <Congrats eventData={createdEvent} onClose={handleModalClose} modalText={'Ура!'} isCreated isUnicorn />
           )}
         </Modal>
       )}

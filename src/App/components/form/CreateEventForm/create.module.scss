@@ -6,13 +6,17 @@
   color: #0d0c0c;
   width: 935px;
   height: 828px;
+  text-align: center;
   &__title {
-    font-weight: 500;
+    font-weight: 600;
     font-size: 36px;
     line-height: 100%;
     letter-spacing: -0.02em;
-    // text-align: center;
     margin-bottom: 64px;
+  }
+
+  &__btn {
+    width: 144px;
   }
 }
 

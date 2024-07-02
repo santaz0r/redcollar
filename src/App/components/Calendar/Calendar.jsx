@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Modal from '../Modal/Modal';
 import EventInfo from '../EventInfo/EventInfo';
 import EventBadge from '../ui/EventBadge/EventBadge';
-import CheckEmailForm from '../form/CheckEmailForm';
+import CheckEmailForm from '../form/CheckEmailForm/CheckEmailForm';
 import Congrats from '../Congrats/Congrats';
 
 const Calendar = ({ startDay, momentInst, totalDays, events }) => {

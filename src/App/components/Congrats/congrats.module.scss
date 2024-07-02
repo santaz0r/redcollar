@@ -20,11 +20,17 @@
     background-position: 93% 0;
   }
 
+  &.bird {
+    background-image: url('./bird.png');
+    background-repeat: no-repeat;
+    background-position: 100% 82%;
+  }
+
   &__title {
     font-weight: 600;
     font-size: 64px;
     line-height: 120%;
-    letter-spacing: -0.04em;
+    letter-spacing: 0.1em;
     margin-bottom: 16px;
   }
 
@@ -73,5 +79,11 @@
 
   &__btn {
     width: 147px;
+  }
+}
+
+.congrats.bird {
+  .congrats__title {
+    width: 516px;
   }
 }

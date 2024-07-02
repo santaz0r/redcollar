@@ -48,6 +48,9 @@ const Calendar = ({ startDay, momentInst, totalDays, events }) => {
           {currentModal === 'congrats' && (
             <Congrats eventData={eventInfo} onClose={handleModalClose} modalText={'Поздравляем!'} />
           )}
+          {currentModal === 'failed' && (
+            <Congrats onClose={handleModalClose} modalText={'Что-то пошло не так'} isFailed />
+          )}
         </Modal>
       )}
       <div className={`${styles.calendar} ${styles.calendar__header}`}>

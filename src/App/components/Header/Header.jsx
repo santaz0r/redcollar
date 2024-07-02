@@ -65,6 +65,9 @@ const Header = ({ today, handleNext, handlePrev }) => {
           {currentModal === 'congrats' && (
             <Congrats eventData={createdEvent} onClose={handleModalClose} modalText={'Ура!'} isCreated isUnicorn />
           )}
+          {currentModal === 'failed' && (
+            <Congrats onClose={handleModalClose} modalText={'Что-то пошло не так'} isFailed />
+          )}
         </Modal>
       )}
     </header>

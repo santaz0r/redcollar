@@ -89,6 +89,7 @@ export const createEvent =
     } catch (error) {
       if (axios.isAxiosError(error)) {
         dispatch(eventCreateFailed(error.message));
+        setNewModal('failed');
       }
     }
   };
@@ -104,6 +105,7 @@ export const toggleEvent =
     } catch (error) {
       if (axios.isAxiosError(error)) {
         dispatch(eventJoinFailed(error.message));
+        setNewModal('failed');
       }
     }
   };

@@ -16,19 +16,7 @@ export const GallerySwiper = ({ elements }) => {
       pagination
       navigation={{ nextEl: `.${common.swiper__btn_next}`, prevEl: `.${common.swiper__btn_prev}` }}
       spaceBetween={16}
-      slidesPerView={2}
-      breakpoints={{
-        1280: {
-          slidesPerView: 2,
-        },
-        1300: {
-          slidesPerView: 3,
-        },
-
-        1500: {
-          slidesPerView: 3,
-        },
-      }}
+      slidesPerView={3}
     >
       {items.map((i) => (
         <SwiperSlide key={i.id}>

@@ -1,0 +1,28 @@
+.members {
+  display: flex;
+  justify-content: space-between;
+  &__other {
+    display: flex;
+    align-items: center;
+  }
+  &__img {
+    width: 15px;
+    height: 40px;
+    svg {
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__count {
+    margin-left: 50px;
+    font-weight: 500;
+  }
+
+  > div {
+    margin-right: 16px;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}

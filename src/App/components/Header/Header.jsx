@@ -38,9 +38,9 @@ const Header = ({ today, handleNext, handlePrev }) => {
         <div className={styles.header__logo}>
           <Rclogo />
         </div>
-        <div className={styles.header__name}>red collar</div>
+        <div className={styles.header__name}>red&nbsp;collar</div>
         <div className={styles.header__app}>
-          planner <span>event</span>
+          planner&nbsp;<span>event</span>
         </div>
       </div>
       <div className={styles.header__item}>

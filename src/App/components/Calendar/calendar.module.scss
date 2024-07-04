@@ -19,7 +19,7 @@
 
   & .cell {
     min-width: 128px;
-    height: 155px;
+    height: 128px;
     overflow-y: auto;
 
     background-color: #fff;
@@ -41,7 +41,7 @@
       width: 5px;
     }
     &__header {
-      height: 40px;
+      height: 27px;
     }
     &.weekend {
       background-color: #fafafa;

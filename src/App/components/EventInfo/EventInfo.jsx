@@ -11,19 +11,19 @@ import { getCurrentuserData, getIsLogin } from '../../store/users';
 import { useState } from 'react';
 import Modal from '../Modal/Modal';
 import Confirm from '../Confirm/Confirm';
-import UserView from '../ui/UserView/UserView';
 import Notification from '../ui/Notification/Notification';
 import notifications from '../../utils/notificationsList';
+import Members from '../ui/Members/Members';
 
 const EventInfo = ({ setCurrentModal, eventData, onClose }) => {
   const [isModalActive, setModalActive] = useState(false);
-  // const [currentModal, setCurrentModalConfirm] = useState('');
   const dispatch = useDispatch();
   const { title, description, location, dateStart, owner, participants, photos } = eventData;
   const currentUser = useSelector(getCurrentuserData);
   const isLoggedIn = useSelector(getIsLogin);
   const amIMember = eventData.participants.some((u) => u.id === currentUser?.id);
   const ownerFirst = moveToFirst(participants, owner);
+
   const day = moment.utc(dateStart).format('dddd');
   const date = moment.utc(dateStart).format('D MMMM');
   const time = moment.utc(dateStart).format('HH:mm');
@@ -91,9 +91,7 @@ const EventInfo = ({ setCurrentModal, eventData, onClose }) => {
       <div className={`${styles.event__participants} ${styles.participants}`}>
         <h3>Участники</h3>
         <div className={styles.participants__list}>
-          {ownerFirst.map((p) => (
-            <UserView key={p.id} name={p.username} isOwner={p.id === owner.id} />
-          ))}
+          <Members items={ownerFirst} ownerId={owner.id} size={4} />
         </div>
       </div>
       <div className={`${styles.event__gallery} ${styles.gallery}`}>

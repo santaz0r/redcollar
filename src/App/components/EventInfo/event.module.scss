@@ -1,7 +1,13 @@
 @import '../../App.module.scss';
 
 .event {
-  width: 60vw;
+  height: 90vh;
+  max-height: 924px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  min-width: 700px;
+  max-width: 1075px;
 
   background-color: #fff;
   border-radius: 64px;
@@ -14,13 +20,13 @@
     letter-spacing: -0.02em;
     text-align: center;
     color: #0d0c0c;
-    margin-bottom: 40px;
+
     text-transform: capitalize;
   }
 
   &__info {
     display: flex;
-    margin-bottom: 40px;
+
     height: 140px;
   }
 
@@ -67,7 +73,6 @@
   }
 
   &__participants {
-    margin-bottom: 56px;
     h3 {
       font-weight: 500;
       font-size: 20px;
@@ -78,7 +83,6 @@
     }
   }
   &__gallery {
-    margin-bottom: 60px;
   }
 
   &:has(div.event__notification) {
@@ -123,12 +127,6 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    > div {
-      margin-right: 48px;
-      &:last-child {
-        margin-right: 0;
-      }
-    }
   }
 }
 

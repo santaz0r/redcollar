@@ -12,6 +12,7 @@ import Notification from '../../ui/Notification/Notification';
 import styles from './check.module.scss';
 import common from '../../../../styles/_common.module.scss';
 import { removeExtraSpaces } from '../../../utils/removeExtraSpaces';
+import transformObjectValues from '../../../utils/transformObjectValues';
 
 const CheckEmailForm = ({ setActive, onClose }) => {
   const dispatch = useDispatch();
@@ -44,10 +45,13 @@ const CheckEmailForm = ({ setActive, onClose }) => {
   const handleTrim = (event, func) => {
     const { name, value } = event.target;
     const processedValue = typeof func === 'function' ? func(value) : value.trim();
-    setValue(name, processedValue, { shouldValidate: true });
+    setValue(name, processedValue);
   };
 
   const onSubmit = handleSubmit((payload) => {
+    console.log(payload);
+    const trimmed = transformObjectValues(payload, removeExtraSpaces);
+    console.log(trimmed);
     isRegistration ? dispatch(signUp({ payload, setActive })) : dispatch(login({ payload, setActive }));
   });
 
@@ -96,8 +100,8 @@ const CheckEmailForm = ({ setActive, onClose }) => {
                     label="Пароль"
                     field="password"
                     placeholder={'Введите пароль'}
+                    onBlur={handleTrim}
                     type="password"
-                    handleTrim={handleTrim}
                     isHide={!isLogin}
                     validationRules={{
                       required: 'Поле обязательно для заполнения',
@@ -118,7 +122,7 @@ const CheckEmailForm = ({ setActive, onClose }) => {
                 <Notification
                   text={notifications.registration}
                   classes={styles.check__notification}
-                  hasError={errors.password || errors.repassword || !passwordsMatch}
+                  hasError={errors.password || errors.repassword}
                 />
                 <div className={styles.form__wrapper}>
                   <TextField
@@ -139,8 +143,8 @@ const CheckEmailForm = ({ setActive, onClose }) => {
                     label="Пароль"
                     field="password"
                     placeholder={'Введите пароль'}
-                    type="password"
                     onChange={handleTrim}
+                    type="password"
                     validationRules={{
                       validate: {
                         isLongEnough: (value) => isInRange(isLongEnough.pattern, value.length) || isLongEnough.message,

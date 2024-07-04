@@ -95,7 +95,6 @@ const CreateEventForm = ({ setEvent, onClose, setCurrentModal }) => {
               </div>
               <div className={`${styles.descr} ${styles.item}`}>
                 <TextareaField
-                  textarea
                   label="Описание"
                   field="description"
                   placeholder={''}
@@ -114,7 +113,7 @@ const CreateEventForm = ({ setEvent, onClose, setCurrentModal }) => {
                   field="time"
                   placeholder={'Введите время'}
                   type="time"
-                  handleTrim={handleTrim}
+                  onChange={handleTrim}
                   validationRules={{
                     required: 'Поле обязательно для заполнения',
                   }}

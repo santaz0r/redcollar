@@ -15,7 +15,6 @@ const CalendarGrid = ({
   const day = startDay.clone().subtract(1, 'day');
   const daysArr = [...Array(totalDays)].map(() => day.add(1, 'day').clone());
 
-  //   const isPassed = (dateStart) => moment().isAfter(dateStart);
   const dateStart = moment(pickerStart, 'DD.MM.YYYY');
   const dateEnd = moment(pickerEnd, 'DD.MM.YYYY');
 

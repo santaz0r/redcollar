@@ -2,26 +2,23 @@ import { useState } from 'react';
 import styles from './text-field.module.scss';
 import { useFormContext } from 'react-hook-form';
 
-const TextField = ({ label, field, type = 'text', placeholder, isHide = false, validationRules, ...rest }) => {
+const TextField = ({
+  label,
+  field,
+  type = 'text',
+  placeholder,
+  isHide = false,
+  validationRules,
+
+  ...rest
+}) => {
   const {
     register,
     setValue,
-    formState: { errors, isSubmitted },
-    watch,
+    formState: { errors },
   } = useFormContext();
 
   const [showPassword, setShowPassword] = useState(false);
-  const isPassword = field === 'password';
-  const isRePassword = field === 'repassword';
-  const passwordValue = watch('password');
-  const rePasswordValue = watch('repassword');
-  const passwordsMatch = passwordValue === rePasswordValue && isSubmitted;
-  const existPassValues = !passwordValue && !rePasswordValue;
-  const borderStyle = existPassValues
-    ? 'solid 2px inherit'
-    : (isPassword || isRePassword) && passwordsMatch
-    ? 'solid 2px green'
-    : 'solid 1px red';
 
   const hasError = errors[field];
   const toggleShowPassword = () => {
@@ -40,7 +37,6 @@ const TextField = ({ label, field, type = 'text', placeholder, isHide = false, v
         <div className={styles.label__title}>{label}</div>
 
         <input
-          style={isPassword || isRePassword ? { border: borderStyle } : {}}
           type={showPassword ? 'text' : type}
           id={field}
           placeholder={placeholder}

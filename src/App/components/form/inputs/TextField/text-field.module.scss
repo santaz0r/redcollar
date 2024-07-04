@@ -10,6 +10,15 @@
     color: gray;
     white-space: nowrap;
     transition: top 0.1s linear, left 0.1s linear, font-size 0.1s linear;
+
+    &.required {
+      &::after {
+        content: '*';
+        position: absolute;
+        top: -3px;
+        color: red;
+      }
+    }
   }
   input {
     padding: 27px 16px 12px;

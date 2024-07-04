@@ -3,21 +3,21 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCurrentuserData, getUsersList } from '../../../store/users';
 import { createEvent, getTriggerLoading } from '../../../store/events';
-import MyButton from '../../ui/Button/Button';
 import TextField from '../inputs/TextField/TextField';
 import TextareaField from '../inputs/TextAreaField/TextareaField';
 import MultiSelect from '../inputs/MultiSelect/MultiSelect';
 import FileInput from '../inputs/Fileinput/FileInput';
-import UserView from '../../ui/UserView/UserView';
 import DataPicker from '../../DatePicker/DataPicker';
 import Confirm from '../../Confirm/Confirm';
 import Modal from '../../Modal/Modal';
+import MyButton from '../../ui/Button/Button';
+import UserView from '../../ui/UserView/UserView';
 import { transformToTimeISO } from '../../../utils/transformToTimeISO';
 import isInRange from '../../../utils/isInRange';
+import { removeExtraSpaces } from '../../../utils/removeExtraSpaces';
 
 import styles from './create.module.scss';
 import common from '../../../../styles/_common.module.scss';
-import { removeExtraSpaces } from '../../../utils/removeExtraSpaces';
 
 const CreateEventForm = ({ setEvent, onClose, setCurrentModal }) => {
   const methods = useForm();
@@ -81,6 +81,7 @@ const CreateEventForm = ({ setEvent, onClose, setCurrentModal }) => {
                   label="Название"
                   field="title"
                   placeholder={'Введите название'}
+                  isRequired
                   onBlur={handleTrim}
                   validationRules={{
                     required: 'Поле обязательно для заполнения',
@@ -91,7 +92,7 @@ const CreateEventForm = ({ setEvent, onClose, setCurrentModal }) => {
                 />
               </div>
               <div className={`${styles.date} ${styles.item}`}>
-                <DataPicker validationRules={{ required: 'Выберите "начало"' }} />
+                <DataPicker validationRules={{ required: 'Выберите "начало"' }} isRequired />
               </div>
               <div className={`${styles.descr} ${styles.item}`}>
                 <TextareaField
@@ -99,6 +100,7 @@ const CreateEventForm = ({ setEvent, onClose, setCurrentModal }) => {
                   field="description"
                   placeholder={''}
                   onBlur={handleTrim}
+                  isRequired
                   validationRules={{
                     required: 'Поле обязательно для заполнения',
                     validate: {
@@ -112,6 +114,7 @@ const CreateEventForm = ({ setEvent, onClose, setCurrentModal }) => {
                   label="Время проведения"
                   field="time"
                   placeholder={'Введите время'}
+                  isRequired
                   type="time"
                   onChange={handleTrim}
                   validationRules={{
@@ -124,6 +127,7 @@ const CreateEventForm = ({ setEvent, onClose, setCurrentModal }) => {
                   label="Место проведения"
                   field="location"
                   placeholder={'Введите место'}
+                  isRequired
                   onBlur={handleTrim}
                   validationRules={{
                     required: 'Поле обязательно для заполнения',

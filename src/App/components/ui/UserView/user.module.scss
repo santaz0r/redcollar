@@ -9,6 +9,11 @@
   line-height: 100%;
   letter-spacing: -0.02em;
   color: #0d0c0c;
+
+  &__info {
+    text-align: left;
+  }
+
   &__photo {
     width: 40px;
     height: 40px;

@@ -2,13 +2,13 @@ import { useState } from 'react';
 import moment from 'moment';
 import CalendarGrid from './CalendarGrid';
 
-import styles from './calendar-mini.module.scss';
+import styles from './data-picker.module.scss';
 import MiniHeader from './MiniHeader';
 import { useFormContext } from 'react-hook-form';
 
 const TOTAL_DAYS = 42;
 
-const DataPicker = ({ validationRules }) => {
+const DataPicker = ({ validationRules, isRequired }) => {
   const {
     register,
     setValue,
@@ -16,8 +16,14 @@ const DataPicker = ({ validationRules }) => {
   } = useFormContext();
   const [momentInst, setMomentInst] = useState(moment());
   const startDay = momentInst.clone().startOf('month').startOf('week');
-  const handlePrev = () => setMomentInst((prev) => prev.clone().subtract(1, 'month'));
-  const handleNext = () => setMomentInst((prev) => prev.clone().add(1, 'month'));
+  const handlePrev = (e) => {
+    e.preventDefault();
+    setMomentInst((prev) => prev.clone().subtract(1, 'month'));
+  };
+  const handleNext = (e) => {
+    e.preventDefault();
+    setMomentInst((prev) => prev.clone().add(1, 'month'));
+  };
 
   const [isActive, setIsActive] = useState(false);
   const [isStart, setIsStart] = useState(false);
@@ -50,7 +56,6 @@ const DataPicker = ({ validationRules }) => {
   const handleSubmit = () => {
     setValue('dateStart', startDate, { shouldValidate: true });
     setValue('dateEnd', endDate);
-
     setIsActive(false);
     setIsStart(false);
     setIsEnd(false);
@@ -58,11 +63,13 @@ const DataPicker = ({ validationRules }) => {
 
   const notice = () => (isEnd ? 'Выберите конечную дату' : 'Выберите дату начала');
 
+  const setRequiredClass = () => (isRequired ? styles.required : '');
+
   return (
     <div className={styles.date_picker}>
       <div className={styles.date_picker__inputs}>
         <div className={styles.date_picker__input}>
-          <div className={styles.date_picker__label}>Начало</div>
+          <div className={`${styles.date_picker__label} ${setRequiredClass()}`}>Начало</div>
 
           <input
             className={isStart ? styles.active : undefined}
@@ -99,7 +106,7 @@ const DataPicker = ({ validationRules }) => {
                 setDateStart={setDateStart}
                 pickerStart={startDate}
                 pickerEnd={endDate}
-                onClick={handleSubmit}
+                onSubmit={handleSubmit}
               />
             </div>
           )}
@@ -113,7 +120,7 @@ const DataPicker = ({ validationRules }) => {
                 setDateEnd={setDateEnd}
                 pickerStart={startDate}
                 pickerEnd={endDate}
-                onClick={handleSubmit}
+                onSubmit={handleSubmit}
               />
             </div>
           )}

@@ -96,20 +96,22 @@
   border: 1px solid gray;
   border-radius: 12px;
   margin-top: 5px;
+
   &::-webkit-scrollbar {
     width: 5px;
   }
 
   &::-webkit-scrollbar-track {
     border-radius: 24px;
-
     width: 15px;
     background-color: #fafafa;
+    margin: 10px 0;
   }
   &::-webkit-scrollbar-thumb {
     background: gray;
     border-radius: 24px;
     width: 5px;
+    cursor: pointer;
   }
 }
 
@@ -157,16 +159,16 @@
   border-right: none;
   overflow: auto;
   &::-webkit-scrollbar {
-    width: 5px;
-    height: 6px;
+    height: 5px;
   }
-
   &::-webkit-scrollbar-track {
     border-radius: 24px;
     width: 15px;
     background-color: #fafafa;
     border: transparent;
+    margin: 0 10px;
   }
+
   &::-webkit-scrollbar-thumb {
     background: gray;
     border-radius: 24px;

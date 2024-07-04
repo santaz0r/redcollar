@@ -9,7 +9,7 @@ const TextField = ({
   placeholder,
   isHide = false,
   validationRules,
-
+  isRequired = false,
   ...rest
 }) => {
   const {
@@ -30,11 +30,12 @@ const TextField = ({
   };
 
   const setErrorClass = () => (hasError ? styles.error : '');
+  const setRequiredClass = () => (isRequired ? styles.required : '');
 
   return (
     <div className={` ${isHide ? styles.hide : styles.container}`}>
-      <label className={`${styles.label} ${setErrorClass()}`} htmlFor={field}>
-        <div className={styles.label__title}>{label}</div>
+      <label className={`${styles.label} ${setErrorClass()} `} htmlFor={field}>
+        <div className={`${styles.label__title} ${setRequiredClass()}`}>{label}</div>
 
         <input
           type={showPassword ? 'text' : type}

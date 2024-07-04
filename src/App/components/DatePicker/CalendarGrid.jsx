@@ -10,7 +10,7 @@ const CalendarGrid = ({
   setDateEnd,
   pickerStart,
   pickerEnd,
-  onClick,
+  onSubmit,
 }) => {
   const day = startDay.clone().subtract(1, 'day');
   const daysArr = [...Array(totalDays)].map(() => day.add(1, 'day').clone());
@@ -63,7 +63,8 @@ const CalendarGrid = ({
 
   const formatDay = (day) => day.format('D');
 
-  const transitionDate = (day) => {
+  const transitionDate = (e, day) => {
+    e.preventDefault();
     setDateStart ? setDateStart(day) : setDateEnd(day);
   };
   return (
@@ -88,7 +89,7 @@ const CalendarGrid = ({
                   className={`${styles.day__wrapper} ${isPickerEnd(i)} ${isPickerStart(i)} ${isInRage(
                     i
                   )} ${setIsBeforeToday(i)} ${isBeforeStart(i)} ${isAfterEnd(i)}`}
-                  onClick={() => transitionDate(i)}
+                  onClick={(e) => transitionDate(e, i)}
                   disabled={isBeforeToday(i)}
                 >
                   {!isCurrentDay(i) ? formatDay(i) : <div className={styles.current_day}>{formatDay(i)}</div>}
@@ -98,7 +99,7 @@ const CalendarGrid = ({
           </div>
         ))}
       </div>
-      <MyButton classes={styles.calendar__submit} onClick={onClick}>
+      <MyButton classes={styles.calendar__submit} onClick={onSubmit}>
         Применить
       </MyButton>
     </>

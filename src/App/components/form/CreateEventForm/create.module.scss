@@ -45,6 +45,17 @@
     display: flex;
     flex-direction: column;
   }
+
+  // label {
+  //   & > div {
+  //     &::after {
+  //       content: '1234';
+  //       &:last-child(1) {
+  //         content: '5';
+  //       }
+  //     }
+  //   }
+  // }
 }
 
 .item {

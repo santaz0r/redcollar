@@ -1,6 +1,7 @@
 import moment from 'moment';
-import styles from './grid.module.scss';
 import MyButton from '../ui/Button/Button';
+
+import styles from './grid.module.scss';
 
 const CalendarGrid = ({
   startDay,
@@ -105,5 +106,7 @@ const CalendarGrid = ({
     </>
   );
 };
+
+CalendarGrid.displayName = 'CalendarGrid';
 
 export default CalendarGrid;

@@ -12,7 +12,6 @@ import Notification from '../../ui/Notification/Notification';
 import styles from './check.module.scss';
 import common from '../../../../styles/_common.module.scss';
 import { removeExtraSpaces } from '../../../utils/removeExtraSpaces';
-import transformObjectValues from '../../../utils/transformObjectValues';
 
 const CheckEmailForm = ({ setActive, onClose }) => {
   const dispatch = useDispatch();
@@ -47,9 +46,6 @@ const CheckEmailForm = ({ setActive, onClose }) => {
   };
 
   const onSubmit = handleSubmit((payload) => {
-    console.log(payload);
-    const trimmed = transformObjectValues(payload, removeExtraSpaces);
-    console.log(trimmed);
     isRegistration ? dispatch(signUp({ payload, setActive })) : dispatch(login({ payload, setActive }));
   });
 

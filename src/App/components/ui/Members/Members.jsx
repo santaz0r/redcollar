@@ -3,7 +3,8 @@ import UserView from '../UserView/UserView';
 
 import styles from './members.module.scss';
 
-import Photo from './nophoto.svg'; // фото-заглушка используется для упрощения, т.к. в объектах не передается img-url юзера
+// фото-заглушка используется для упрощения, т.к. в объектах не передается img-url юзера
+import Photo from './nophoto.svg';
 
 const Members = ({ items, ownerId, size = 4 }) => {
   const hiddenCount = items.length > size ? items.length - size : 0;

@@ -5,7 +5,7 @@ import styles from './event-badge.module.scss';
 
 const EventBadge = ({ isPassed, title, onClick, participants, owner }) => {
   const currentUser = useSelector(getCurrentuserData);
-  const amIOwner = owner.id === currentUser?.id;
+  const amIOwner = owner.id === currentUser?.id && participants.some((i) => i.id === owner.id);
   const amIMember = participants.some((u) => u.id === currentUser?.id);
 
   return (

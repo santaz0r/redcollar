@@ -43,6 +43,13 @@
       opacity: 1;
       transition: opacity 0.1s linear;
     }
+
+    &.input_success {
+      border: 2px solid green;
+    }
+    &.input_error {
+      border: 2px solid red;
+    }
   }
   &:has(input:focus) {
     .label {
@@ -145,6 +152,7 @@
     }
   }
 }
+
 .hide {
   display: none;
 }

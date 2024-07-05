@@ -2,7 +2,7 @@ import TextField from '../inputs/TextField/TextField';
 import { useForm, FormProvider } from 'react-hook-form';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { clearError, getLoginError, getUsersList, login, signUp } from '../../../store/users';
+import { authTrigger, clearError, getLoginError, getUsersList, login, signUp } from '../../../store/users';
 import notifications from '../../../utils/notificationsList';
 import Regexp from '../inputs/patterns';
 import isInRange from '../../../utils/isInRange';
@@ -17,6 +17,7 @@ import transformObjectValues from '../../../utils/transformObjectValues';
 const CheckEmailForm = ({ setActive, onClose }) => {
   const dispatch = useDispatch();
   const users = useSelector(getUsersList);
+  const authLoadingTrigger = useSelector(authTrigger);
   const [checkStatus, setCheckStatus] = useState('check');
   const loginError = useSelector(getLoginError);
   const combineCheckLogin = checkStatus === 'login' || checkStatus === 'check';
@@ -34,9 +35,6 @@ const CheckEmailForm = ({ setActive, onClose }) => {
     trigger,
   } = methods;
   const passwordWatch = watch('password');
-  const rePasswordWatch = watch('repassword');
-
-  const passwordsMatch = passwordWatch === rePasswordWatch;
 
   const { hasNumber, isLongEnough, hasUpperCase, hasLowerCase, hasSymbol } = Regexp;
 
@@ -111,8 +109,8 @@ const CheckEmailForm = ({ setActive, onClose }) => {
                 </div>
                 {isCheck && <MyButton onClick={handleCheck}>Далее</MyButton>}
                 {isLogin && (
-                  <MyButton disabledOption={hasError} type={'submit'} onClick={onSubmit}>
-                    Войти
+                  <MyButton disabledOption={hasError || authLoadingTrigger} type={'submit'} onClick={onSubmit}>
+                    {authLoadingTrigger ? 'Ожидайте' : 'Войти'}
                   </MyButton>
                 )}
               </div>
@@ -125,20 +123,23 @@ const CheckEmailForm = ({ setActive, onClose }) => {
                   hasError={errors.password || errors.repassword}
                 />
                 <div className={styles.form__wrapper}>
-                  <TextField
-                    label="Ваше имя"
-                    field="name"
-                    placeholder={'Введите имя'}
-                    onBlur={(e) => handleTrim(e, removeExtraSpaces)}
-                    validationRules={{
-                      required: 'Поле обязательно для заполнения',
-                      pattern: {
-                        value: Regexp['name'].pattern,
-                        message: Regexp['name'].message,
-                      },
-                    }}
-                  />
-
+                  <div className={styles.login_error}>
+                    <TextField
+                      label="Ваше имя"
+                      field="name"
+                      placeholder={'Введите имя'}
+                      onBlur={(e) => handleTrim(e, removeExtraSpaces)}
+                      validationRules={{
+                        required: 'Поле обязательно для заполнения',
+                        pattern: {
+                          value: Regexp['name'].pattern,
+                          message: Regexp['name'].message,
+                        },
+                      }}
+                    />
+                    {/* Сервер при регистрации выдает ошибку если имя уже занято */}
+                    {loginError && <span>Имя уже занято...</span>}
+                  </div>
                   <TextField
                     label="Пароль"
                     field="password"
@@ -159,7 +160,7 @@ const CheckEmailForm = ({ setActive, onClose }) => {
                   <TextField
                     label="Повторите пароль"
                     field="repassword"
-                    placeholder={'Введите пароль'}
+                    placeholder={'Повторите пароль'}
                     type="password"
                     validationRules={{
                       validate: {
@@ -167,8 +168,8 @@ const CheckEmailForm = ({ setActive, onClose }) => {
                       },
                     }}
                   />
-                  <MyButton type="submit" onClick={onSubmit}>
-                    Зарегистрироваться
+                  <MyButton type="submit" onClick={onSubmit} disabledOption={authLoadingTrigger}>
+                    {authLoadingTrigger ? 'Ожидайте' : 'Зарегистрироваться'}
                   </MyButton>
                 </div>
               </>

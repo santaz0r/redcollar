@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import styles from './text-field.module.scss';
 import { useFormContext } from 'react-hook-form';
+
+import styles from './text-field.module.scss';
 
 const TextField = ({
   label,
@@ -21,16 +22,19 @@ const TextField = ({
   const [showPassword, setShowPassword] = useState(false);
 
   const hasError = errors[field];
-  const toggleShowPassword = () => {
-    setShowPassword((prevState) => !prevState);
-  };
-
-  const clearInput = () => {
-    setValue(field, '');
-  };
+  const toggleShowPassword = () => setShowPassword((prev) => !prev);
+  const clearInput = () => setValue(field, '');
 
   const setErrorClass = () => (hasError ? styles.error : '');
   const setRequiredClass = () => (isRequired ? styles.required : '');
+
+  const getFieldClass = (fieldName) => {
+    fieldName === 'repassword' ? '' : styles.input_success;
+    if (Object.keys(errors).length > 0) {
+      return errors[fieldName] ? styles.input_error : '';
+    }
+    return '';
+  };
 
   return (
     <div className={` ${isHide ? styles.hide : styles.container}`}>
@@ -38,12 +42,14 @@ const TextField = ({
         <div className={`${styles.label__title} ${setRequiredClass()}`}>{label}</div>
 
         <input
+          className={` ${getFieldClass(field)}`}
           type={showPassword ? 'text' : type}
           id={field}
           placeholder={placeholder}
           {...register(field, validationRules)}
           {...rest}
         />
+
         {type === 'text' && (
           <button className={`${styles.label__button} ${setErrorClass()}`} onClick={clearInput}></button>
         )}

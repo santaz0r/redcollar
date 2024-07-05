@@ -35,9 +35,11 @@ const usersSlice = createSlice({
     authRequestSuccess: (state, action) => {
       state.user = action.payload;
       state.isLoggedIn = true;
+      state.isLoading = false;
     },
     authRequestFailed: (state, action) => {
       state.userError = action.payload;
+      state.isLoading = false;
     },
     userLoad: (state, action) => {
       state.isLoading = action.payload;
@@ -56,7 +58,7 @@ const usersSlice = createSlice({
     getUsersList: (state) => state.entities,
     getIsLogin: (state) => state.isLoggedIn,
     getCurrentuserData: (state) => state.user,
-    getUserLoadingStatus: (state) => state.isLoading,
+    authTrigger: (state) => state.isLoading,
     getLoginError: (state) => state.userError,
   },
 });
@@ -75,14 +77,8 @@ const {
   clearedLoginErr,
 } = actions;
 
-export const {
-  getLoginError,
-  getUsersList,
-  getUserLoadingStatus,
-  getUsersLoadingStatus,
-  getCurrentuserData,
-  getIsLogin,
-} = selectors;
+export const { getLoginError, getUsersList, authTrigger, getUsersLoadingStatus, getCurrentuserData, getIsLogin } =
+  selectors;
 
 export const clearError = () => async (dispatch) => dispatch(clearedLoginErr());
 
@@ -122,7 +118,7 @@ export const signUp =
       setActive(false);
     } catch (e) {
       if (axios.isAxiosError(e)) {
-        const message = e.response?.data?.message;
+        const message = e.response?.data?.error?.message;
         dispatch(authRequestFailed(message));
       }
     }

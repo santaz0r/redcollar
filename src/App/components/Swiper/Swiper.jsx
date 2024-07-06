@@ -7,6 +7,8 @@ import common from '../../../styles/_common.module.scss';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
+import { filesEndpoint } from '../../config.json';
+
 export const GallerySwiper = ({ elements }) => {
   const items = elements ? elements : [];
 
@@ -21,7 +23,7 @@ export const GallerySwiper = ({ elements }) => {
       {items.map((i) => (
         <SwiperSlide key={i.id}>
           <div className={styles.swiper__img}>
-            <img src={`http://localhost:1337${i.url}`} alt={i.name.replace(i.ext, '')} />
+            <img src={`${filesEndpoint}${i.url}`} alt={i.name.replace(i.ext, '')} />
           </div>
         </SwiperSlide>
       ))}

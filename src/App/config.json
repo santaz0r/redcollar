@@ -1,5 +1,5 @@
 {
-  "apiEndpoint": "http://localhost:1337/api",
+  "apiEndpoint": "https://planner.rdclr.ru/api",
   "query": "?pagination%5BpageSize%5D=100&populate=participants%2C%20owner%2C%20photos",
-  "filesEndpoint": "http://localhost:1337"
+  "filesEndpoint": "https://planner.rdclr.ru"
 }

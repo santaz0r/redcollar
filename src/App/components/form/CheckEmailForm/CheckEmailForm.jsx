@@ -53,7 +53,7 @@ const CheckEmailForm = ({ setActive, onClose }) => {
     const isValidate = await trigger('email');
     if (!isValidate) return;
     const email = getValues('email');
-    const isEmailExists = users.some((u) => u.email === email);
+    const isEmailExists = users.some((u) => u.email.toLowerCase() === email.toLowerCase());
     isEmailExists ? setCheckStatus('login') : setCheckStatus('registration');
   };
 
